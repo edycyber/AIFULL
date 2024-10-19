@@ -8,7 +8,7 @@
         :root {
             --bg-color: #121212;
             --text-color: #ffffff;
-            --primary-color: #3498db; /* Changed from violet to blue */
+            --primary-color: #3498db;
             --secondary-color: #03dac6;
         }
 
@@ -92,7 +92,7 @@
         .external-content {
             border: 1px solid var(--primary-color);
             border-radius: 4px;
-            height: 600px; /* Increased to give more space to external content */
+            height: 600px;
             overflow: hidden;
         }
 
@@ -115,7 +115,7 @@
             margin-bottom: 1rem;
         }
 
-        #toolbar button {
+        #toolbar button, #toolbar select {
             background-color: var(--primary-color);
             color: var(--bg-color);
             border: none;
@@ -125,8 +125,8 @@
             transition: background-color 0.3s;
         }
 
-        #toolbar button:hover {
-            background-color: #2980b9; /* A darker shade of blue for hover */
+        #toolbar button:hover, #toolbar select:hover {
+            background-color: #2980b9;
         }
 
         #editor {
@@ -199,14 +199,18 @@
         <div class="column">
             <div class="editor-content">
                 <div id="toolbar">
-                    <button onclick="changeSize('small')">Small</button>
-                    <button onclick="changeSize('normal')">Normal</button>
-                    <button onclick="changeSize('large')">Large</button>
-                    <button onclick="changeSize('huge')">Huge</button>
-                    <button onclick="changeFont('Arial')">Arial</button>
-                    <button onclick="changeFont('Helvetica')">Helvetica</button>
-                    <button onclick="changeFont('Times New Roman')">Times New Roman</button>
-                    <button onclick="changeFont('Courier New')">Courier New</button>
+                    <select onchange="changeSize(this.value)">
+                        <option value="3">Small</option>
+                        <option value="4" selected>Normal</option>
+                        <option value="5">Large</option>
+                        <option value="7">Huge</option>
+                    </select>
+                    <select onchange="changeFont(this.value)">
+                        <option value="Arial">Arial</option>
+                        <option value="Helvetica">Helvetica</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                        <option value="Courier New">Courier New</option>
+                    </select>
                     <button onclick="insertImage()">Insert Image</button>
                     <button onclick="insertTable()">Insert Table</button>
                     <button onclick="addFootnote()">Add Footnote</button>
@@ -231,7 +235,6 @@
 
     <script>
         function signOut() {
-            // Implement sign out logic here
             window.location.href = 'index.html';
         }
 
@@ -289,12 +292,17 @@
         }
 
         function downloadFile(format) {
-            // Implement download logic here
-            alert(`Downloading as ${format.toUpperCase()}...`);
+            const content = document.getElementById('editor').innerText;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `document.${format}`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
             closeModal();
         }
 
-        // Close modal when clicking outside of it
         window.onclick = function(event) {
             if (event.target == document.getElementById('downloadModal')) {
                 closeModal();
