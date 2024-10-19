@@ -5,7 +5,7 @@ function validate() {
                        ];
 
     if (validCodes.includes(code)) {
-        window.location.href = 'choose.html';
+        window.location.href = 'app.html';
     } else {
         window.location.href = 'https://sparrow-ai.online/premiumplan';
     }
