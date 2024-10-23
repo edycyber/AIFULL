@@ -37,25 +37,6 @@
             font-weight: bold;
         }
 
-        nav {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .nav-button {
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 4px;
-            background-color: #3d3d3d;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .nav-button:hover {
-            background-color: #4d4d4d;
-        }
-
         /* Main Container */
         .main-container {
             display: flex;
@@ -87,6 +68,10 @@
             width: 66.67%;
             height: 100%;
             position: relative;
+            background-image: url('https://sparrow-ai.online/Virtualcomputer.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             border: 1px solid #666;
             overflow: auto;
         }
@@ -202,108 +187,92 @@
     </header>
 
     <div class="main-container">
-        <div class="iframe-section">
-            <iframe src="https://aimovieclub.com" width="100%" height="100%" frameborder="0"></iframe>
+        <div class="iframe-section" id="iframeSection">
+            <iframe src="https://aimovieclub.com" id="contentIframe" width="100%" height="100%" frameborder="0"></iframe>
         </div>
         <div class="divider" id="divider"></div>
-        <div class="windows-section">
+        <div class="windows-section" id="windowsSection">
             <!-- Shortcuts -->
-            <div class="desktop-icon" style="top: 20px; left: 20px;" onclick="openLink('https://sparrow-ai.online/')">
+            <div class="desktop-icon" style="top: 20px; left: 20px;" onclick="openInSimulator('https://sparrow-ai.online/')">
                 <img class="icon-img" src="https://sparrow-ai.online/landing-icon.png" alt="Landing Pages Icon">
                 <span class="icon-text">Landing Pages</span>
             </div>
 
-            <div class="desktop-icon" style="top: 20px; left: 120px;" onclick="openLink('https://opensiliconvalley.sparrow-ai.online/')">
+            <div class="desktop-icon" style="top: 20px; left: 120px;" onclick="openInSimulator('https://opensiliconvalley.sparrow-ai.online/')">
                 <img class="icon-img" src="https://sparrow-ai.online/siliconvalley-icon.png" alt="Silicon Valley Icon">
                 <span class="icon-text">Silicon Valley</span>
             </div>
 
-            <div class="desktop-icon" style="top: 120px; left: 20px;" onclick="openLink('https://books.sparrow-ai.online/')">
+            <div class="desktop-icon" style="top: 120px; left: 20px;" onclick="openInSimulator('https://books.sparrow-ai.online/')">
                 <img class="icon-img" src="https://sparrow-ai.online/books-icon.png" alt="Books Icon">
                 <span class="icon-text">Books</span>
             </div>
 
-            <div class="desktop-icon" style="top: 120px; left: 120px;" onclick="openLink('https://nfl.sparrow-ai.online/')">
+            <div class="desktop-icon" style="top: 120px; left: 120px;" onclick="openInSimulator('https://nfl.sparrow-ai.online/')">
                 <img class="icon-img" src="https://sparrow-ai.online/nfl-icon.png" alt="NFL Icon">
                 <span class="icon-text">NFL</span>
             </div>
 
-            <div class="desktop-icon" style="top: 220px; left: 20px;" onclick="openLink('https://shopping.sparrow-ai.online/')">
+            <div class="desktop-icon" style="top: 220px; left: 20px;" onclick="openInSimulator('https://shopping.sparrow-ai.online/')">
                 <img class="icon-img" src="https://sparrow-ai.online/shopping-icon.png" alt="Shopping Icon">
                 <span class="icon-text">Shopping</span>
             </div>
 
-            <div class="desktop-icon" style="top: 220px; left: 120px;" onclick="openLink('https://tools.sparrow-ai.online/')">
+            <div class="desktop-icon" style="top: 220px; left: 120px;" onclick="openInSimulator('https://tools.sparrow-ai.online/')">
                 <img class="icon-img" src="https://sparrow-ai.online/tools-icon.png" alt="Tools Icon">
                 <span class="icon-text">Tools</span>
             </div>
 
-            <div class="desktop-icon" style="top: 320px; left: 20px;" onclick="openLink('https://promotions.sparrow-ai.online/')">
+            <div class="desktop-icon" style="top: 320px; left: 20px;" onclick="openInSimulator('https://promotions.sparrow-ai.online/')">
                 <img class="icon-img" src="https://sparrow-ai.online/promotions-icon.png" alt="Promotions Icon">
                 <span class="icon-text">Promotions</span>
             </div>
 
-            <div class="desktop-icon" style="top: 320px; left: 120px;" onclick="openBrowserWindow()">
+            <div class="desktop-icon" style="top: 320px; left: 120px;" onclick="openInSimulator('https://www.bing.com')">
                 <img class="icon-img" src="https://sparrow-ai.online/internet-icon.png" alt="Internet Icon">
                 <span class="icon-text">Internet Access</span>
-            </div>
-
-            <!-- Chrome Window -->
-            <div class="chrome-window" id="chromeWindow">
-                <div class="window-header">
-                    <div class="window-title">Browser</div>
-                    <div class="window-controls">
-                        <button class="window-button minimize" onclick="minimizeWindow()"></button>
-                        <button class="window-button maximize" onclick="maximizeWindow()"></button>
-                        <button class="window-button close" onclick="closeWindow()"></button>
-                    </div>
-                </div>
-                <iframe class="window-content" src="https://www.google.com" frameborder="0"></iframe>
             </div>
         </div>
     </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const chromeWindow = document.getElementById('chromeWindow');
-    const chromeContent = document.querySelector('.window-content');
+    const iframeSection = document.getElementById('iframeSection');
+    const divider = document.getElementById('divider');
+    const contentIframe = document.getElementById('contentIframe');
+    
+    // Handle window resizing with the divider
+    let isResizing = false;
+    
+    divider.addEventListener('mousedown', (e) => {
+        isResizing = true;
+        document.body.style.cursor = 'col-resize';
+    });
+    
+    document.addEventListener('mousemove', (e) => {
+        if (!isResizing) return;
+        
+        const containerWidth = document.querySelector('.main-container').clientWidth;
+        let newWidth = e.clientX;
+        
+        if (newWidth < 200) newWidth = 200;
+        if (newWidth > containerWidth * 0.8) newWidth = containerWidth * 0.8;
+        
+        iframeSection.style.width = `${newWidth}px`;
+        document.getElementById('windowsSection').style.width = `calc(100% - ${newWidth}px)`;
+    });
+    
+    document.addEventListener('mouseup', () => {
+        isResizing = false;
+        document.body.style.cursor = 'default';
+    });
 
-    // Open browser window when the Internet Access icon is clicked
-    function openBrowserWindow() {
-        chromeWindow.style.display = 'flex';
+    // Open links inside the iframe (Windows simulator)
+    function openInSimulator(url) {
+        contentIframe.src = url;
     }
 
-    // Open links in a new tab or in the iframe section
-    function openLink(url) {
-        window.open(url, '_blank');
-    }
-
-    // Close the browser window
-    function closeWindow() {
-        chromeWindow.style.display = 'none';
-    }
-
-    // Minimize the browser window
-    function minimizeWindow() {
-        chromeWindow.style.display = 'none';
-    }
-
-    // Maximize the browser window
-    function maximizeWindow() {
-        if (chromeWindow.style.width === '100%') {
-            chromeWindow.style.width = '80%';
-            chromeWindow.style.height = '80%';
-        } else {
-            chromeWindow.style.width = '100%';
-            chromeWindow.style.height = 'calc(100% - 40px)';
-        }
-    }
-
-    window.openBrowserWindow = openBrowserWindow;
-    window.openLink = openLink;
-    window.closeWindow = closeWindow;
-    window.minimizeWindow = minimizeWindow;
-    window.maximizeWindow = maximizeWindow;
+    window.openInSimulator = openInSimulator;
 });
 </script>
 </body>
