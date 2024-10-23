@@ -1,4 +1,4 @@
-<html><head><base href="https://sparrow-ai.online/">
+<html><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sparrow AI - Virtual Desktop</title>
@@ -270,7 +270,7 @@ nav {
 </style>
 </head>
 <body>
-    <header>
+  <header>
         <div class="logo">Sparrow AI</div>
         <nav>
             <div class="dropdown">
@@ -289,32 +289,24 @@ nav {
             <button class="nav-button" onclick="window.location.href='index.html'">Sign Out</button>
         </nav>
     </header>
-    
+
     <div class="main-container">
         <div class="iframe-section">
             <iframe src="https://aimovieclub.com" width="100%" height="100%" frameborder="0"></iframe>
         </div>
         <div class="divider" id="divider"></div>
         <div class="windows-section">
-            <div class="desktop-icon" onclick="openChrome()">
-                <svg class="icon-img" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="45" fill="#4285f4"/>
-                    <circle cx="50" cy="50" r="18" fill="white"/>
-                    <circle cx="50" cy="50" r="15" fill="#4285f4"/>
-                    <path d="M50,50 L85,25" stroke="yellow" stroke-width="8"/>
-                    <path d="M50,50 L85,75" stroke="red" stroke-width="8"/>
-                    <path d="M50,50 L15,50" stroke="green" stroke-width="8"/>
-                </svg>
-                <span class="icon-text">Google Chrome</span>
+            <div class="desktop-icon" onclick="openBrowserWindow()">
+                <!-- Icon and text for Chrome -->
             </div>
 
             <div class="chrome-window" id="chromeWindow">
                 <div class="window-header">
-                    <div class="window-title">Google Chrome</div>
+                    <div class="window-title">Browser</div>
                     <div class="window-controls">
-                        <button class="window-button minimize" onclick="minimizeChrome()"></button>
-                        <button class="window-button maximize" onclick="maximizeChrome()"></button>
-                        <button class="window-button close" onclick="closeChrome()"></button>
+                        <button class="window-button minimize" onclick="minimizeWindow()"></button>
+                        <button class="window-button maximize" onclick="maximizeWindow()"></button>
+                        <button class="window-button close" onclick="closeWindow()"></button>
                     </div>
                 </div>
                 <iframe class="window-content" src="https://www.google.com" frameborder="0"></iframe>
@@ -322,12 +314,7 @@ nav {
 
             <div class="taskbar">
                 <button class="start-button">
-                    <svg width="16" height="16" viewBox="0 0 16 16">
-                        <rect x="2" y="2" width="5" height="5" fill="#fff"/>
-                        <rect x="9" y="2" width="5" height="5" fill="#fff"/>
-                        <rect x="2" y="9" width="5" height="5" fill="#fff"/>
-                        <rect x="9" y="9" width="5" height="5" fill="#fff"/>
-                    </svg>
+                    <!-- Start button icon -->
                     Start
                 </button>
             </div>
@@ -336,139 +323,59 @@ nav {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const buttons = document.querySelectorAll('.nav-button');
-    buttons.forEach(button => {
-        button.addEventListener('click', function() {
-            this.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                this.style.transform = 'scale(1)';
-            }, 100);
-        });
-    });
-
     const homeButton = document.getElementById('homeButton');
     const dropdown = document.getElementById('homeDropdown');
     const chromeWindow = document.getElementById('chromeWindow');
     const chromeContent = document.querySelector('.window-content');
 
+    // Toggle dropdown visibility on Home button click
     homeButton.addEventListener('click', function(e) {
         e.stopPropagation();
         dropdown.classList.toggle('show');
     });
 
+    // Hide dropdown when clicking outside
     document.addEventListener('click', function(e) {
         if (!homeButton.contains(e.target)) {
             dropdown.classList.remove('show');
         }
     });
 
+    // Handle link clicks inside the dropdown
     dropdown.addEventListener('click', function(e) {
         if (e.target.tagName === 'A') {
             e.preventDefault();
             const url = e.target.href;
-            
-            // If Chrome window exists, use it
-            if (chromeWindow) {
-                chromeWindow.style.display = 'flex';
-                chromeContent.src = url;
-            }
-            
+
+            // Open the clicked URL in the iframe inside the Chrome window
+            chromeWindow.style.display = 'flex';
+            chromeContent.src = url;
+
             dropdown.classList.remove('show');
         }
     });
-
-    const desktopIcon = document.querySelector('.desktop-icon');
-    let isDragging = false;
-    let currentX;
-    let currentY;
-    let initialX;
-    let initialY;
-    let xOffset = 0;
-    let yOffset = 0;
-
-    desktopIcon.addEventListener('mousedown', dragStart);
-    document.addEventListener('mousemove', drag);
-    document.addEventListener('mouseup', dragEnd);
-
-    function dragStart(e) {
-        initialX = e.clientX - xOffset;
-        initialY = e.clientY - yOffset;
-
-        if (e.target === desktopIcon || desktopIcon.contains(e.target)) {
-            isDragging = true;
-        }
-    }
-
-    function drag(e) {
-        if (isDragging) {
-            e.preventDefault();
-            currentX = e.clientX - initialX;
-            currentY = e.clientY - initialY;
-
-            xOffset = currentX;
-            yOffset = currentY;
-
-            setTranslate(currentX, currentY, desktopIcon);
-        }
-    }
-
-    function setTranslate(xPos, yPos, el) {
-        el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
-    }
-
-    function dragEnd(e) {
-        initialX = currentX;
-        initialY = currentY;
-        isDragging = false;
-    }
-
-    const divider = document.getElementById('divider');
-    const iframeSection = document.querySelector('.iframe-section');
-    const windowsSection = document.querySelector('.windows-section');
-    
-    let isResizing = false;
-    
-    divider.addEventListener('mousedown', (e) => {
-        isResizing = true;
-        document.body.style.cursor = 'col-resize';
-    });
-    
-    document.addEventListener('mousemove', (e) => {
-        if (!isResizing) return;
-        
-        const containerWidth = document.querySelector('.main-container').clientWidth;
-        let newWidth = e.clientX;
-        
-        if (newWidth < 200) newWidth = 200;
-        if (newWidth > containerWidth * 0.8) newWidth = containerWidth * 0.8;
-        
-        iframeSection.style.width = `${newWidth}px`;
-        windowsSection.style.width = `calc(100% - ${newWidth}px)`;
-    });
-    
-    document.addEventListener('mouseup', () => {
-        isResizing = false;
-        document.body.style.cursor = 'default';
-    });
 });
 
-// Chrome window functionality
-function openChrome() {
+// Open the browser window
+function openBrowserWindow() {
     const chromeWindow = document.getElementById('chromeWindow');
     chromeWindow.style.display = 'flex';
 }
 
-function closeChrome() {
+// Close the browser window
+function closeWindow() {
     const chromeWindow = document.getElementById('chromeWindow');
     chromeWindow.style.display = 'none';
 }
 
-function minimizeChrome() {
+// Minimize the browser window
+function minimizeWindow() {
     const chromeWindow = document.getElementById('chromeWindow');
     chromeWindow.style.display = 'none';
 }
 
-function maximizeChrome() {
+// Maximize the browser window
+function maximizeWindow() {
     const chromeWindow = document.getElementById('chromeWindow');
     if (chromeWindow.style.width === '100%') {
         chromeWindow.style.width = '80%';
@@ -476,65 +383,7 @@ function maximizeChrome() {
     } else {
         chromeWindow.style.width = '100%';
         chromeWindow.style.height = 'calc(100% - 40px)';
-        chromeWindow.style.top = '0';
-        chromeWindow.style.transform = 'translate(-50%, 0)';
     }
-}
-
-function handleIframeError(iframe) {
-    iframe.onerror = function() {
-        iframe.src = 'about:blank';
-        iframe.srcdoc = '<h2>Unable to load content. Please try again later.</h2>';
-    };
-}
-
-document.querySelector('.iframe-section iframe').onerror = handleIframeError;
-document.querySelector('.window-content').onerror = handleIframeError;
-
-// Make the Chrome window draggable
-const chromeWindow = document.getElementById('chromeWindow');
-const windowHeader = document.querySelector('.window-header');
-
-let isDraggingWindow = false;
-let currentWindowX;
-let currentWindowY;
-let initialWindowX;
-let initialWindowY;
-let xWindowOffset = 0;
-let yWindowOffset = 0;
-
-windowHeader.addEventListener('mousedown', dragWindowStart);
-document.addEventListener('mousemove', dragWindow);
-document.addEventListener('mouseup', dragWindowEnd);
-
-function dragWindowStart(e) {
-    if (e.target.classList.contains('window-button')) return;
-    
-    initialWindowX = e.clientX - xWindowOffset;
-    initialWindowY = e.clientY - yWindowOffset;
-
-    if (e.target === windowHeader || e.target.parentElement === windowHeader) {
-        isDraggingWindow = true;
-    }
-}
-
-function dragWindow(e) {
-    if (isDraggingWindow) {
-        e.preventDefault();
-        currentWindowX = e.clientX - initialWindowX;
-        currentWindowY = e.clientY - initialWindowY;
-
-        xWindowOffset = currentWindowX;
-        yWindowOffset = currentWindowY;
-
-        chromeWindow.style.transform = `translate(${currentWindowX}px, ${currentWindowY}px)`;
-    }
-}
-
-function dragWindowEnd(e) {
-    initialWindowX = currentWindowX;
-    initialWindowY = currentWindowY;
-    isDraggingWindow = false;
 }
 </script>
 </body>
