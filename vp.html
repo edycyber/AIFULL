@@ -1,276 +1,291 @@
-<html><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sparrow AI - Virtual Desktop</title>
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sparrow AI - Virtual Desktop</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background-color: #1a1a1a;
-    color: #ffffff;
-    min-height: 100vh;
-}
+        /* Basic Styles */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow: hidden;
+        }
 
-header {
-    background-color: #2d2d2d;
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    z-index: 1000;
-    position: relative;
-}
+        header {
+            background-color: #2d2d2d;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: relative;
+        }
 
-.logo {
-    color: #4285f4;
-    font-size: 1.5rem;
-    font-weight: bold;
-}
+        .logo {
+            color: #4285f4;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
 
-nav {
-    display: flex;
-    gap: 1rem;
-}
+        nav {
+            display: flex;
+            gap: 1rem;
+        }
 
-.nav-button {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 4px;
-    background-color: #3d3d3d;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+        .nav-button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            background-color: #3d3d3d;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
-.nav-button:hover {
-    background-color: #4d4d4d;
-}
+        .nav-button:hover {
+            background-color: #4d4d4d;
+        }
 
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #2d2d2d;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1001;
+            border-radius: 4px;
+            border: 1px solid #3d3d3d;
+        }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #2d2d2d;
-    min-width: 200px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    z-index: 1001;
-    border-radius: 4px;
-    border: 1px solid #3d3d3d;
-    margin-top: 5px;
-}
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.2s;
+        }
 
-.dropdown-content a {
-    color: white;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    transition: background-color 0.2s;
-}
+        .dropdown-content a:hover {
+            background-color: #4d4d4d;
+        }
 
-.dropdown-content a:hover {
-    background-color: #4d4d4d;
-}
+        .show {
+            display: block;
+        }
 
-.show {
-    display: block;
-}
+        /* Main Container */
+        .main-container {
+            display: flex;
+            height: calc(100vh - 64px);
+            overflow: hidden;
+        }
 
-.main-container {
-    display: flex;
-    height: calc(100vh - 64px);
-}
+        .iframe-section {
+            width: 33.33%;
+            height: 100%;
+            border-right: 2px solid #3d3d3d;
+            min-width: 200px;
+            max-width: 80%;
+            overflow: auto;
+        }
 
-.iframe-section {
-    width: 33.33%;
-    height: 100%;
-    border-right: 2px solid #3d3d3d;
-    min-width: 200px;
-    max-width: 80%;
-}
+        .divider {
+            width: 8px;
+            background: #3d3d3d;
+            cursor: col-resize;
+            height: 100%;
+        }
 
-.divider {
-    width: 8px;
-    background: #3d3d3d;
-    cursor: col-resize;
-    height: 100%;
-}
+        .divider:hover {
+            background: #4285f4;
+        }
 
-.divider:hover {
-    background: #4285f4;
-}
+        .windows-section {
+            width: 66.67%;
+            height: 100%;
+            position: relative;
+            border: 1px solid #666;
+            overflow: auto;
+        }
 
-.windows-section {
-    width: 66.67%;
-    height: 100%;
-    background-image: url('https://sparrow-ai.online/Virtualcomputer.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-    border: 1px solid #666;
-}
+        .desktop-icon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            width: 80px;
+            text-align: center;
+            padding: 5px;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
 
-.desktop-icon {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    width: 80px;
-    text-align: center;
-    padding: 5px;
-    border-radius: 5px;
-    transition: background-color 0.2s;
-}
+        .desktop-icon:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
 
-.desktop-icon:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
+        .icon-img {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 5px;
+        }
 
-.icon-img {
-    width: 48px;
-    height: 48px;
-    margin-bottom: 5px;
-}
+        .icon-text {
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            font-size: 0.8rem;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
 
-.icon-text {
-    color: white;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-    font-size: 0.8rem;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 2px 4px;
-    border-radius: 3px;
-}
+        .taskbar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(to bottom, #245edb, #123456);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+        }
 
-.taskbar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 40px;
-    background: linear-gradient(to bottom, #245edb, #123456);
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
-}
+        .start-button {
+            background: linear-gradient(to bottom, #3c8f00, #1e4500);
+            border: 1px solid #245edb;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            height: 30px;
+            margin-right: 10px;
+            position: relative;
+        }
 
-.start-button {
-    background: linear-gradient(to bottom, #3c8f00, #1e4500);
-    border: 1px solid #245edb;
-    color: white;
-    padding: 5px 15px;
-    border-radius: 3px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    height: 30px;
-    margin-right: 10px;
-}
+        .start-button:hover {
+            background: linear-gradient(to bottom, #4ca800, #2e6000);
+        }
 
-.start-button:hover {
-    background: linear-gradient(to bottom, #4ca800, #2e6000);
-}
+        .start-menu {
+            display: none;
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            background-color: #2d2d2d;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1002;
+            border-radius: 4px;
+            border: 1px solid #3d3d3d;
+        }
 
-.chrome-window {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    height: 80%;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    display: none;
-    flex-direction: column;
-    border: 1px solid #0078d7;
-}
+        .start-menu a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.2s;
+        }
 
-.window-header {
-    background: linear-gradient(to bottom, #0078d7, #0053a9);
-    padding: 8px;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        .start-menu a:hover {
+            background-color: #4d4d4d;
+        }
 
-.window-title {
-    color: white;
-    font-size: 0.9rem;
-    font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-}
+        /* Chrome window styling */
+        .chrome-window {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            display: none;
+            flex-direction: column;
+            border: 1px solid #0078d7;
+            overflow: hidden;
+        }
 
-.window-controls {
-    display: flex;
-    gap: 8px;
-}
+        .window-header {
+            background: linear-gradient(to bottom, #0078d7, #0053a9);
+            padding: 8px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.window-button {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    border: 1px solid rgba(0,0,0,0.2);
-    cursor: pointer;
-    transition: filter 0.2s;
-}
+        .window-title {
+            color: white;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
 
-.window-button:hover {
-    filter: brightness(1.1);
-}
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
 
-.minimize {
-    background-color: #ffbd44;
-}
+        .window-button {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 1px solid rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: filter 0.2s;
+        }
 
-.maximize {
-    background-color: #00ca4e;
-}
+        .window-button:hover {
+            filter: brightness(1.1);
+        }
 
-.close {
-    background-color: #ff605c;
-}
+        .minimize {
+            background-color: #ffbd44;
+        }
 
-.window-content {
-    flex: 1;
-    width: 100%;
-    height: calc(100% - 36px);
-    background-color: white;
-}
+        .maximize {
+            background-color: #00ca4e;
+        }
 
-@media (max-width: 768px) {
-    .main-container {
-        flex-direction: column;
-    }
-    
-    .iframe-section,
-    .windows-section {
-        width: 100%;
-        height: 50vh;
-    }
-}
-</style>
+        .close {
+            background-color: #ff605c;
+        }
+
+        .window-content {
+            flex: 1;
+            width: 100%;
+            height: calc(100% - 36px);
+            background-color: white;
+            overflow: auto;
+        }
+    </style>
 </head>
 <body>
-  <header>
+    <header>
         <div class="logo">Sparrow AI</div>
         <nav>
             <div class="dropdown">
@@ -297,7 +312,8 @@ nav {
         <div class="divider" id="divider"></div>
         <div class="windows-section">
             <div class="desktop-icon" onclick="openBrowserWindow()">
-                <!-- Icon and text for Chrome -->
+                <img class="icon-img" src="https://sparrow-ai.online/chrome-icon.png" alt="Browser Icon">
+                <span class="icon-text">Internet Access</span>
             </div>
 
             <div class="chrome-window" id="chromeWindow">
@@ -313,10 +329,18 @@ nav {
             </div>
 
             <div class="taskbar">
-                <button class="start-button">
-                    <!-- Start button icon -->
+                <button class="start-button" id="startButton">
                     Start
                 </button>
+                <div class="start-menu" id="startMenu">
+                    <a href="https://sparrow-ai.online/" target="_blank">Landing Pages</a>
+                    <a href="https://opensiliconvalley.sparrow-ai.online/" target="_blank">Open Silicon Valley</a>
+                    <a href="https://books.sparrow-ai.online/" target="_blank">Books</a>
+                    <a href="https://nfl.sparrow-ai.online/" target="_blank">NFL</a>
+                    <a href="https://shopping.sparrow-ai.online/" target="_blank">Shopping</a>
+                    <a href="https://tools.sparrow-ai.online/" target="_blank">Tools</a>
+                    <a href="https://promotions.sparrow-ai.online/" target="_blank">Promotions</a>
+                </div>
             </div>
         </div>
     </div>
@@ -325,6 +349,8 @@ nav {
 document.addEventListener('DOMContentLoaded', function() {
     const homeButton = document.getElementById('homeButton');
     const dropdown = document.getElementById('homeDropdown');
+    const startButton = document.getElementById('startButton');
+    const startMenu = document.getElementById('startMenu');
     const chromeWindow = document.getElementById('chromeWindow');
     const chromeContent = document.querySelector('.window-content');
 
@@ -341,50 +367,48 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Handle link clicks inside the dropdown
-    dropdown.addEventListener('click', function(e) {
-        if (e.target.tagName === 'A') {
-            e.preventDefault();
-            const url = e.target.href;
+    // Toggle Start menu visibility on Start button click
+    startButton.addEventListener('click', function(e) {
+        e.stopPropagation();
+        startMenu.classList.toggle('show');
+    });
 
-            // Open the clicked URL in the iframe inside the Chrome window
-            chromeWindow.style.display = 'flex';
-            chromeContent.src = url;
-
-            dropdown.classList.remove('show');
+    document.addEventListener('click', function(e) {
+        if (!startButton.contains(e.target)) {
+            startMenu.classList.remove('show');
         }
     });
-});
 
-// Open the browser window
-function openBrowserWindow() {
-    const chromeWindow = document.getElementById('chromeWindow');
-    chromeWindow.style.display = 'flex';
-}
+    // Open browser window when the desktop icon is clicked
+    document.querySelector('.desktop-icon').addEventListener('click', function() {
+        chromeWindow.style.display = 'flex';
+    });
 
-// Close the browser window
-function closeWindow() {
-    const chromeWindow = document.getElementById('chromeWindow');
-    chromeWindow.style.display = 'none';
-}
-
-// Minimize the browser window
-function minimizeWindow() {
-    const chromeWindow = document.getElementById('chromeWindow');
-    chromeWindow.style.display = 'none';
-}
-
-// Maximize the browser window
-function maximizeWindow() {
-    const chromeWindow = document.getElementById('chromeWindow');
-    if (chromeWindow.style.width === '100%') {
-        chromeWindow.style.width = '80%';
-        chromeWindow.style.height = '80%';
-    } else {
-        chromeWindow.style.width = '100%';
-        chromeWindow.style.height = 'calc(100% - 40px)';
+    // Close the browser window
+    function closeWindow() {
+        chromeWindow.style.display = 'none';
     }
-}
+
+    // Minimize the browser window
+    function minimizeWindow() {
+        chromeWindow.style.display = 'none';
+    }
+
+    // Maximize the browser window
+    function maximizeWindow() {
+        if (chromeWindow.style.width === '100%') {
+            chromeWindow.style.width = '80%';
+            chromeWindow.style.height = '80%';
+        } else {
+            chromeWindow.style.width = '100%';
+            chromeWindow.style.height = 'calc(100% - 40px)';
+        }
+    }
+
+    window.closeWindow = closeWindow;
+    window.minimizeWindow = minimizeWindow;
+    window.maximizeWindow = maximizeWindow;
+});
 </script>
 </body>
 </html>
