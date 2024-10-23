@@ -56,35 +56,6 @@
             background-color: #4d4d4d;
         }
 
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background-color: #2d2d2d;
-            min-width: 200px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-            z-index: 1001;
-            border-radius: 4px;
-            border: 1px solid #3d3d3d;
-        }
-
-        .dropdown-content a {
-            color: white;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            transition: background-color 0.2s;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #4d4d4d;
-        }
-
-        .show {
-            display: block;
-        }
-
         /* Main Container */
         .main-container {
             display: flex;
@@ -122,8 +93,6 @@
 
         .desktop-icon {
             position: absolute;
-            top: 20px;
-            left: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -152,63 +121,6 @@
             background-color: rgba(0, 0, 0, 0.5);
             padding: 2px 4px;
             border-radius: 3px;
-        }
-
-        .taskbar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 40px;
-            background: linear-gradient(to bottom, #245edb, #123456);
-            display: flex;
-            align-items: center;
-            padding: 0 10px;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
-        }
-
-        .start-button {
-            background: linear-gradient(to bottom, #3c8f00, #1e4500);
-            border: 1px solid #245edb;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 3px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            height: 30px;
-            margin-right: 10px;
-            position: relative;
-        }
-
-        .start-button:hover {
-            background: linear-gradient(to bottom, #4ca800, #2e6000);
-        }
-
-        .start-menu {
-            display: none;
-            position: absolute;
-            bottom: 40px;
-            left: 0;
-            background-color: #2d2d2d;
-            min-width: 200px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-            z-index: 1002;
-            border-radius: 4px;
-            border: 1px solid #3d3d3d;
-        }
-
-        .start-menu a {
-            color: white;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            transition: background-color 0.2s;
-        }
-
-        .start-menu a:hover {
-            background-color: #4d4d4d;
         }
 
         /* Chrome window styling */
@@ -287,22 +199,6 @@
 <body>
     <header>
         <div class="logo">Sparrow AI</div>
-        <nav>
-            <div class="dropdown">
-                <button class="nav-button" id="homeButton">Home</button>
-                <div class="dropdown-content" id="homeDropdown">
-                    <a href="https://sparrow-ai.online/" target="_blank">Landing Pages</a>
-                    <a href="https://opensiliconvalley.sparrow-ai.online/" target="_blank">Open Silicon Valley</a>
-                    <a href="https://books.sparrow-ai.online/" target="_blank">Books</a>
-                    <a href="https://nfl.sparrow-ai.online/" target="_blank">NFL</a>
-                    <a href="https://shopping.sparrow-ai.online/" target="_blank">Shopping</a>
-                    <a href="https://tools.sparrow-ai.online/" target="_blank">Tools</a>
-                    <a href="https://promotions.sparrow-ai.online/" target="_blank">Promotions</a>
-                </div>
-            </div>
-            <button class="nav-button">Profile</button>
-            <button class="nav-button" onclick="window.location.href='index.html'">Sign Out</button>
-        </nav>
     </header>
 
     <div class="main-container">
@@ -311,11 +207,48 @@
         </div>
         <div class="divider" id="divider"></div>
         <div class="windows-section">
-            <div class="desktop-icon" onclick="openBrowserWindow()">
-                <img class="icon-img" src="https://sparrow-ai.online/chrome-icon.png" alt="Browser Icon">
+            <!-- Shortcuts -->
+            <div class="desktop-icon" style="top: 20px; left: 20px;" onclick="openLink('https://sparrow-ai.online/')">
+                <img class="icon-img" src="https://sparrow-ai.online/landing-icon.png" alt="Landing Pages Icon">
+                <span class="icon-text">Landing Pages</span>
+            </div>
+
+            <div class="desktop-icon" style="top: 20px; left: 120px;" onclick="openLink('https://opensiliconvalley.sparrow-ai.online/')">
+                <img class="icon-img" src="https://sparrow-ai.online/siliconvalley-icon.png" alt="Silicon Valley Icon">
+                <span class="icon-text">Silicon Valley</span>
+            </div>
+
+            <div class="desktop-icon" style="top: 120px; left: 20px;" onclick="openLink('https://books.sparrow-ai.online/')">
+                <img class="icon-img" src="https://sparrow-ai.online/books-icon.png" alt="Books Icon">
+                <span class="icon-text">Books</span>
+            </div>
+
+            <div class="desktop-icon" style="top: 120px; left: 120px;" onclick="openLink('https://nfl.sparrow-ai.online/')">
+                <img class="icon-img" src="https://sparrow-ai.online/nfl-icon.png" alt="NFL Icon">
+                <span class="icon-text">NFL</span>
+            </div>
+
+            <div class="desktop-icon" style="top: 220px; left: 20px;" onclick="openLink('https://shopping.sparrow-ai.online/')">
+                <img class="icon-img" src="https://sparrow-ai.online/shopping-icon.png" alt="Shopping Icon">
+                <span class="icon-text">Shopping</span>
+            </div>
+
+            <div class="desktop-icon" style="top: 220px; left: 120px;" onclick="openLink('https://tools.sparrow-ai.online/')">
+                <img class="icon-img" src="https://sparrow-ai.online/tools-icon.png" alt="Tools Icon">
+                <span class="icon-text">Tools</span>
+            </div>
+
+            <div class="desktop-icon" style="top: 320px; left: 20px;" onclick="openLink('https://promotions.sparrow-ai.online/')">
+                <img class="icon-img" src="https://sparrow-ai.online/promotions-icon.png" alt="Promotions Icon">
+                <span class="icon-text">Promotions</span>
+            </div>
+
+            <div class="desktop-icon" style="top: 320px; left: 120px;" onclick="openBrowserWindow()">
+                <img class="icon-img" src="https://sparrow-ai.online/internet-icon.png" alt="Internet Icon">
                 <span class="icon-text">Internet Access</span>
             </div>
 
+            <!-- Chrome Window -->
             <div class="chrome-window" id="chromeWindow">
                 <div class="window-header">
                     <div class="window-title">Browser</div>
@@ -327,62 +260,23 @@
                 </div>
                 <iframe class="window-content" src="https://www.google.com" frameborder="0"></iframe>
             </div>
-
-            <div class="taskbar">
-                <button class="start-button" id="startButton">
-                    Start
-                </button>
-                <div class="start-menu" id="startMenu">
-                    <a href="https://sparrow-ai.online/" target="_blank">Landing Pages</a>
-                    <a href="https://opensiliconvalley.sparrow-ai.online/" target="_blank">Open Silicon Valley</a>
-                    <a href="https://books.sparrow-ai.online/" target="_blank">Books</a>
-                    <a href="https://nfl.sparrow-ai.online/" target="_blank">NFL</a>
-                    <a href="https://shopping.sparrow-ai.online/" target="_blank">Shopping</a>
-                    <a href="https://tools.sparrow-ai.online/" target="_blank">Tools</a>
-                    <a href="https://promotions.sparrow-ai.online/" target="_blank">Promotions</a>
-                </div>
-            </div>
         </div>
     </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const homeButton = document.getElementById('homeButton');
-    const dropdown = document.getElementById('homeDropdown');
-    const startButton = document.getElementById('startButton');
-    const startMenu = document.getElementById('startMenu');
     const chromeWindow = document.getElementById('chromeWindow');
     const chromeContent = document.querySelector('.window-content');
 
-    // Toggle dropdown visibility on Home button click
-    homeButton.addEventListener('click', function(e) {
-        e.stopPropagation();
-        dropdown.classList.toggle('show');
-    });
-
-    // Hide dropdown when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!homeButton.contains(e.target)) {
-            dropdown.classList.remove('show');
-        }
-    });
-
-    // Toggle Start menu visibility on Start button click
-    startButton.addEventListener('click', function(e) {
-        e.stopPropagation();
-        startMenu.classList.toggle('show');
-    });
-
-    document.addEventListener('click', function(e) {
-        if (!startButton.contains(e.target)) {
-            startMenu.classList.remove('show');
-        }
-    });
-
-    // Open browser window when the desktop icon is clicked
-    document.querySelector('.desktop-icon').addEventListener('click', function() {
+    // Open browser window when the Internet Access icon is clicked
+    function openBrowserWindow() {
         chromeWindow.style.display = 'flex';
-    });
+    }
+
+    // Open links in a new tab or in the iframe section
+    function openLink(url) {
+        window.open(url, '_blank');
+    }
 
     // Close the browser window
     function closeWindow() {
@@ -405,6 +299,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    window.openBrowserWindow = openBrowserWindow;
+    window.openLink = openLink;
     window.closeWindow = closeWindow;
     window.minimizeWindow = minimizeWindow;
     window.maximizeWindow = maximizeWindow;
