@@ -65,6 +65,7 @@
             background: #4285f4;
         }
 
+        /* Windows section background simulator */
         .windows-section {
             width: 66.67%;
             height: 100%;
@@ -74,7 +75,7 @@
             background-position: center;
             background-repeat: no-repeat;
             border: 1px solid #666;
-            overflow: auto;
+            overflow: hidden;
         }
 
         .desktop-icon {
@@ -109,11 +110,72 @@
             border-radius: 3px;
         }
 
-        /* Iframe content on the right */
-        .iframe-content {
+        /* Browser-like window for opening shortcuts */
+        .simulated-window {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            width: 80%;
+            height: 80%;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            display: none;
+            flex-direction: column;
+            border: 1px solid #0078d7;
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .window-header {
+            background: linear-gradient(to bottom, #0078d7, #0053a9);
+            padding: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .window-title {
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .window-button {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 1px solid rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: filter 0.2s;
+        }
+
+        .window-button:hover {
+            filter: brightness(1.1);
+        }
+
+        .minimize {
+            background-color: #ffbd44;
+        }
+
+        .maximize {
+            background-color: #00ca4e;
+        }
+
+        .close {
+            background-color: #ff605c;
+        }
+
+        .window-content {
             width: 100%;
-            height: 100%;
-            border: none;
+            height: calc(100% - 36px);
+            background-color: white;
+            overflow: auto;
         }
     </style>
 </head>
@@ -126,42 +188,42 @@
         <!-- Left section with desktop icons -->
         <div class="left-section" id="leftSection">
             <!-- Shortcuts -->
-            <div class="desktop-icon" style="top: 20px; left: 20px;" onclick="openInSimulator('https://sparrow-ai.online/')">
+            <div class="desktop-icon" style="top: 20px; left: 20px;" onclick="openSimulatorWindow('Landing Pages', 'https://sparrow-ai.online/')">
                 <img class="icon-img" src="https://sparrow-ai.online/landing-icon.png" alt="Landing Pages Icon">
                 <span class="icon-text">Landing Pages</span>
             </div>
 
-            <div class="desktop-icon" style="top: 20px; left: 120px;" onclick="openInSimulator('https://opensiliconvalley.sparrow-ai.online/')">
+            <div class="desktop-icon" style="top: 20px; left: 120px;" onclick="openSimulatorWindow('Silicon Valley', 'https://opensiliconvalley.sparrow-ai.online/')">
                 <img class="icon-img" src="https://sparrow-ai.online/siliconvalley-icon.png" alt="Silicon Valley Icon">
                 <span class="icon-text">Silicon Valley</span>
             </div>
 
-            <div class="desktop-icon" style="top: 120px; left: 20px;" onclick="openInSimulator('https://books.sparrow-ai.online/')">
+            <div class="desktop-icon" style="top: 120px; left: 20px;" onclick="openSimulatorWindow('Books', 'https://books.sparrow-ai.online/')">
                 <img class="icon-img" src="https://sparrow-ai.online/books-icon.png" alt="Books Icon">
                 <span class="icon-text">Books</span>
             </div>
 
-            <div class="desktop-icon" style="top: 120px; left: 120px;" onclick="openInSimulator('https://nfl.sparrow-ai.online/')">
+            <div class="desktop-icon" style="top: 120px; left: 120px;" onclick="openSimulatorWindow('NFL', 'https://nfl.sparrow-ai.online/')">
                 <img class="icon-img" src="https://sparrow-ai.online/nfl-icon.png" alt="NFL Icon">
                 <span class="icon-text">NFL</span>
             </div>
 
-            <div class="desktop-icon" style="top: 220px; left: 20px;" onclick="openInSimulator('https://shopping.sparrow-ai.online/')">
+            <div class="desktop-icon" style="top: 220px; left: 20px;" onclick="openSimulatorWindow('Shopping', 'https://shopping.sparrow-ai.online/')">
                 <img class="icon-img" src="https://sparrow-ai.online/shopping-icon.png" alt="Shopping Icon">
                 <span class="icon-text">Shopping</span>
             </div>
 
-            <div class="desktop-icon" style="top: 220px; left: 120px;" onclick="openInSimulator('https://tools.sparrow-ai.online/')">
+            <div class="desktop-icon" style="top: 220px; left: 120px;" onclick="openSimulatorWindow('Tools', 'https://tools.sparrow-ai.online/')">
                 <img class="icon-img" src="https://sparrow-ai.online/tools-icon.png" alt="Tools Icon">
                 <span class="icon-text">Tools</span>
             </div>
 
-            <div class="desktop-icon" style="top: 320px; left: 20px;" onclick="openInSimulator('https://promotions.sparrow-ai.online/')">
+            <div class="desktop-icon" style="top: 320px; left: 20px;" onclick="openSimulatorWindow('Promotions', 'https://promotions.sparrow-ai.online/')">
                 <img class="icon-img" src="https://sparrow-ai.online/promotions-icon.png" alt="Promotions Icon">
                 <span class="icon-text">Promotions</span>
             </div>
 
-            <div class="desktop-icon" style="top: 320px; left: 120px;" onclick="openInSimulator('https://www.bing.com')">
+            <div class="desktop-icon" style="top: 320px; left: 120px;" onclick="openSimulatorWindow('Internet Access', 'https://www.bing.com')">
                 <img class="icon-img" src="https://sparrow-ai.online/internet-icon.png" alt="Internet Icon">
                 <span class="icon-text">Internet Access</span>
             </div>
@@ -170,51 +232,62 @@
         <!-- Divider between icons and content -->
         <div class="divider" id="divider"></div>
 
-        <!-- Right section with the iframe (simulating Windows display) -->
+        <!-- Right section for Windows-like simulation -->
         <div class="windows-section" id="windowsSection">
-            <iframe id="contentIframe" class="iframe-content" src="https://aimovieclub.com"></iframe>
+            <!-- Simulated window (hidden by default, appears when you click a shortcut) -->
+            <div class="simulated-window" id="simulatedWindow">
+                <div class="window-header">
+                    <div class="window-title" id="windowTitle">Window</div>
+                    <div class="window-controls">
+                        <button class="window-button minimize" onclick="minimizeWindow()"></button>
+                        <button class="window-button maximize" onclick="maximizeWindow()"></button>
+                        <button class="window-button close" onclick="closeWindow()"></button>
+                    </div>
+                </div>
+                <iframe class="window-content" id="windowContent" src=""></iframe>
+            </div>
         </div>
     </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const leftSection = document.getElementById('leftSection');
-    const divider = document.getElementById('divider');
-    const windowsSection = document.getElementById('windowsSection');
-    const contentIframe = document.getElementById('contentIframe');
+    const simulatedWindow = document.getElementById('simulatedWindow');
+    const windowContent = document.getElementById('windowContent');
+    const windowTitle = document.getElementById('windowTitle');
     
-    // Handle window resizing with the divider
-    let isResizing = false;
-    
-    divider.addEventListener('mousedown', (e) => {
-        isResizing = true;
-        document.body.style.cursor = 'col-resize';
-    });
-    
-    document.addEventListener('mousemove', (e) => {
-        if (!isResizing) return;
-        
-        const containerWidth = document.querySelector('.main-container').clientWidth;
-        let newWidth = e.clientX;
-        
-        if (newWidth < 200) newWidth = 200;
-        if (newWidth > containerWidth * 0.8) newWidth = containerWidth * 0.8;
-        
-        leftSection.style.width = `${newWidth}px`;
-        windowsSection.style.width = `calc(100% - ${newWidth}px)`;
-    });
-    
-    document.addEventListener('mouseup', () => {
-        isResizing = false;
-        document.body.style.cursor = 'default';
-    });
-
-    // Open links inside the iframe (on the right side)
-    function openInSimulator(url) {
-        contentIframe.src = url;
+    // Function to open the simulated window in the Windows-like section
+    function openSimulatorWindow(title, url) {
+        simulatedWindow.style.display = 'flex';
+        windowContent.src = url;
+        windowTitle.textContent = title;
     }
 
-    window.openInSimulator = openInSimulator;
+    // Close window function
+    function closeWindow() {
+        simulatedWindow.style.display = 'none';
+    }
+
+    // Minimize window function
+    function minimizeWindow() {
+        simulatedWindow.style.display = 'none';
+    }
+
+    // Maximize window function
+    function maximizeWindow() {
+        if (simulatedWindow.style.width === '100%') {
+            simulatedWindow.style.width = '80%';
+            simulatedWindow.style.height = '80%';
+        } else {
+            simulatedWindow.style.width = '100%';
+            simulatedWindow.style.height = '100%';
+        }
+    }
+
+    // Expose functions globally
+    window.openSimulatorWindow = openSimulatorWindow;
+    window.closeWindow = closeWindow;
+    window.minimizeWindow = minimizeWindow;
+    window.maximizeWindow = maximizeWindow;
 });
 </script>
 </body>
