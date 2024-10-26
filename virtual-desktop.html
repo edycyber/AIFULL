@@ -2,35 +2,37 @@
 <html>
 <head>
     <style>
-        /* Reset and base styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            overflow: hidden;
-        }
-
-        /* Main container */
         .main-container {
             display: flex;
             height: 100vh;
         }
 
-        /* Windows section */
+        .iframe-section {
+            flex: 1;
+            border-right: 1px solid #ddd;
+        }
+
+        .divider {
+            width: 1px;
+            background: #ddd;
+        }
+
         .windows-section {
             flex: 1;
             background: #f0f0f0;
             padding: 20px;
             position: relative;
             height: 100vh;
-            overflow-y: auto; /* Enable vertical scrolling */
+            overflow-y: auto !important;
+            padding-right: 15px;
         }
 
-        /* Desktop icons */
         .desktop-icon {
             width: 80px;
             text-align: center;
@@ -51,9 +53,9 @@
             word-wrap: break-word;
         }
 
-        /* Browser window */
         .browser-window {
-            position: absolute;
+            display: none;
+            position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -62,7 +64,7 @@
             background: white;
             border-radius: 8px;
             box-shadow: 0 0 20px rgba(0,0,0,0.2);
-            display: none;
+            z-index: 1000;
             overflow: hidden;
         }
 
@@ -84,26 +86,7 @@
             gap: 10px;
         }
 
-        /* Browser content */
-        .browser-content {
-            width: 100%;
-            height: calc(100% - 40px);
-            border: none;
-        }
-
-        /* Iframe section */
-        .iframe-section {
-            flex: 1;
-            border-right: 1px solid #ddd;
-        }
-
-        /* Divider */
-        .divider {
-            width: 1px;
-            background: #ddd;
-        }
-
-        /* Navigation */
+        /* Navigation styles */
         nav {
             background: #333;
             padding: 15px;
@@ -115,39 +98,100 @@
             text-decoration: none;
             margin: 0 10px;
         }
+
+        #browserFrame {
+            width: 100%;
+            height: calc(100% - 40px);
+            border: none;
+        }
+
+        .window-controls button {
+            padding: 2px 8px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
-    <nav>
-        <span>Sparrow AI</span>
-        <a href="#home">Home</a>
-        <a href="#about">About Us</a>
-        <a href="#profile">Profile</a>
-        <span style="float: right;">Sign Out</span>
-    </nav>
+    <!-- Navigation -->
+    <div>
+        <nav>
+            Sparrow AI
+            <a href="#home">Home</a>
+            <a href="#about">About Us</a>
+            <a href="#profile">Profile</a>
+            <span style="float: right;">Sign Out</span>
+        </nav>
+    </div>
 
+    <!-- Main container -->
     <div class="main-container">
         <div class="iframe-section"></div>
-        <div class="divider"></div>
+        <div id="divider" class="divider"></div>
+        
+        <!-- Windows section with icons -->
         <div class="windows-section">
-            <!-- Desktop Icons -->
-            <div class="desktop-icon" style="top: 20px;" onclick="openBrowserWithUrl('https://sparrow-ai.online/')">
-                <svg class="icon-img" viewBox="0 0 100 100">
+            <!-- Landing Pages -->
+            <div class="desktop-icon" style="top: 20px;" onclick="openInBrowser('https://sparrow-ai.online/')">
+                <svg class="icon-img" viewbox="0 0 100 100">
                     <rect x="10" y="10" width="80" height="80" fill="#4285f4" />
                     <text x="50" y="60" text-anchor="middle" fill="white" font-size="40">LP</text>
                 </svg>
                 <div class="icon-text">Landing Pages</div>
             </div>
 
-            <div class="desktop-icon" style="top: 120px;" onclick="openBrowserWithUrl('https://opensiliconvalley.sparrow-ai.online/')">
-                <svg class="icon-img" viewBox="0 0 100 100">
+            <!-- Silicon Valley -->
+            <div class="desktop-icon" style="top: 120px;" onclick="openInBrowser('https://opensiliconvalley.sparrow-ai.online/')">
+                <svg class="icon-img" viewbox="0 0 100 100">
                     <rect x="10" y="10" width="80" height="80" fill="#ea4335" />
                     <text x="50" y="60" text-anchor="middle" fill="white" font-size="40">SV</text>
                 </svg>
                 <div class="icon-text">Silicon Valley</div>
             </div>
 
-            <!-- Add other desktop icons similarly -->
+            <!-- Books -->
+            <div class="desktop-icon" style="top: 220px;" onclick="openInBrowser('https://books.sparrow-ai.online/')">
+                <svg class="icon-img" viewbox="0 0 100 100">
+                    <rect x="10" y="10" width="80" height="80" fill="#fbbc05" />
+                    <text x="50" y="60" text-anchor="middle" fill="white" font-size="40">BK</text>
+                </svg>
+                <div class="icon-text">Books</div>
+            </div>
+
+            <!-- NFL -->
+            <div class="desktop-icon" style="top: 320px;" onclick="openInBrowser('https://nfl.sparrow-ai.online/')">
+                <svg class="icon-img" viewbox="0 0 100 100">
+                    <rect x="10" y="10" width="80" height="80" fill="#34a853" />
+                    <text x="50" y="60" text-anchor="middle" fill="white" font-size="40">NFL</text>
+                </svg>
+                <div class="icon-text">NFL</div>
+            </div>
+
+            <!-- Shopping -->
+            <div class="desktop-icon" style="top: 420px;" onclick="openInBrowser('https://shopping.sparrow-ai.online/')">
+                <svg class="icon-img" viewbox="0 0 100 100">
+                    <rect x="10" y="10" width="80" height="80" fill="#4285f4" />
+                    <text x="50" y="60" text-anchor="middle" fill="white" font-size="40">SH</text>
+                </svg>
+                <div class="icon-text">Shopping</div>
+            </div>
+
+            <!-- Apps -->
+            <div class="desktop-icon" style="top: 520px;" onclick="openInBrowser('https://apps.sparrow-ai.online/')">
+                <svg class="icon-img" viewbox="0 0 100 100">
+                    <rect x="10" y="10" width="80" height="80" fill="#ea4335" />
+                    <text x="50" y="60" text-anchor="middle" fill="white" font-size="40">APP</text>
+                </svg>
+                <div class="icon-text">Apps</div>
+            </div>
+
+            <!-- Promotions -->
+            <div class="desktop-icon" style="top: 620px;" onclick="openInBrowser('https://promotions.sparrow-ai.online/')">
+                <svg class="icon-img" viewbox="0 0 100 100">
+                    <rect x="10" y="10" width="80" height="80" fill="#fbbc05" />
+                    <text x="50" y="60" text-anchor="middle" fill="white" font-size="40">PR</text>
+                </svg>
+                <div class="icon-text">Promotions</div>
+            </div>
 
             <!-- Browser Window -->
             <div id="browserWindow" class="browser-window">
@@ -157,37 +201,29 @@
                         <button onclick="closeBrowser()">✕</button>
                     </div>
                 </div>
-                <iframe id="browserContent" class="browser-content"></iframe>
+                <iframe id="browserFrame"></iframe>
             </div>
         </div>
     </div>
 
     <script>
-        // Function to open browser with URL
-        function openBrowserWithUrl(url) {
+        // Function to open URLs in the browser simulator
+        function openInBrowser(url) {
             const browserWindow = document.getElementById('browserWindow');
-            const browserContent = document.getElementById('browserContent');
-            
-            // Set the iframe source to the provided URL
-            browserContent.src = url;
-            
-            // Show the browser window
+            const browserFrame = document.getElementById('browserFrame');
+            browserFrame.src = url;
             browserWindow.style.display = 'block';
         }
 
-        // Function to close browser
+        // Function to close the browser window
         function closeBrowser() {
             const browserWindow = document.getElementById('browserWindow');
-            const browserContent = document.getElementById('browserContent');
-            
-            // Clear the iframe source
-            browserContent.src = '';
-            
-            // Hide the browser window
+            const browserFrame = document.getElementById('browserFrame');
+            browserFrame.src = '';
             browserWindow.style.display = 'none';
         }
 
-        // Make the browser window draggable
+        // Make browser window draggable
         const browserWindow = document.getElementById('browserWindow');
         const windowHeader = browserWindow.querySelector('.window-header');
 
@@ -206,8 +242,7 @@
         function dragStart(e) {
             initialX = e.clientX - xOffset;
             initialY = e.clientY - yOffset;
-
-            if (e.target === windowHeader) {
+            if (e.target === windowHeader || e.target.parentElement === windowHeader) {
                 isDragging = true;
             }
         }
@@ -215,13 +250,10 @@
         function drag(e) {
             if (isDragging) {
                 e.preventDefault();
-                
                 currentX = e.clientX - initialX;
                 currentY = e.clientY - initialY;
-
                 xOffset = currentX;
                 yOffset = currentY;
-
                 setTranslate(currentX, currentY, browserWindow);
             }
         }
@@ -229,7 +261,6 @@
         function dragEnd(e) {
             initialX = currentX;
             initialY = currentY;
-
             isDragging = false;
         }
 
