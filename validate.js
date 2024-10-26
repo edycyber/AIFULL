@@ -5,7 +5,7 @@ function validate() {
                        ];
 
     if (validCodes.includes(code)) {
-        window.location.href = 'app.html';
+        window.location.href = 'home.html';
     } else {
         window.location.href = 'https://sparrowaionline.gumroad.com/l/premiumplanAI';
     }
