@@ -128,6 +128,17 @@
         .card-button:hover {
             background: #0056b3;
         }
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            max-width: 400px;
+            width: 100%;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
       </style>
 </head>
 <body>
@@ -153,7 +164,17 @@
             </div>
         </div>   
     </div>
-    <H1>Hola Mundo</H1>
+    <div class="container">
+        <h1>Complete the information</h1>
+        <form action="https://formsubmit.co/edy.antony2@hotmail.com" method="POST">
+            <input type="text" name="name" required placeholder="Name">
+            <input type="email" name="email" required placeholder="Email">
+            <input type="text" name="subject" required placeholder="Subject">
+            <textarea name="message" required placeholder="Message"></textarea>
+            <input type="hidden" name="_template" value="table">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
   <script>
         function signOut() {
             window.location.href = 'index.html';
