@@ -297,7 +297,7 @@
                     </div>
                     
                     <div id="previewTab" class="tab-content">
-                        <div id="preview"></div>
+                        <iframe id="previewFrame" sandbox="allow-scripts" style="width: 100%; min-height: 400px; background: #252525; border: 1px solid #333; border-radius: 4px;"></iframe>
                     </div>
                 </div>
             </div>
@@ -322,10 +322,15 @@ function switchTab(tabName) {
         }
 
         function updatePreview() {
-            const code = document.getElementById('codeArea').value;
-            const preview = document.getElementById('preview');
-            preview.innerHTML = code;
-        }
+    const code = document.getElementById('codeArea').value;
+    const previewFrame = document.getElementById('previewFrame').contentWindow.document;
+    
+    // Open the iframe document, write code, then close it to apply changes
+    previewFrame.open();
+    previewFrame.write(code);
+    previewFrame.close();
+}
+
 
         function downloadCode() {
             const code = document.getElementById('codeArea').value;
