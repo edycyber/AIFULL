@@ -320,8 +320,7 @@ function switchTab(tabName) {
                 updatePreview();
             }
         }
-
-        function updatePreview() {
+function updatePreview() {
     const code = document.getElementById('codeArea').value;
     const previewFrame = document.getElementById('previewFrame').contentWindow.document;
     
@@ -330,8 +329,6 @@ function switchTab(tabName) {
     previewFrame.write(code);
     previewFrame.close();
 }
-
-
         function downloadCode() {
             const code = document.getElementById('codeArea').value;
             const blob = new Blob([code], { type: 'text/html' });
