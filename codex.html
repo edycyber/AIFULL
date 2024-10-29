@@ -306,30 +306,36 @@
             window.location.href = 'index.html';
         }
 function switchTab(tabName) {
+    // Hide all tab contents
     document.querySelectorAll('.tab-content').forEach(tab => {
         tab.classList.remove('active');
     });
+
+    // Deactivate all tabs
     document.querySelectorAll('.tab').forEach(tab => {
         tab.classList.remove('active');
     });
 
+    // Activate the selected tab and its content
     document.getElementById(tabName + 'Tab').classList.add('active');
     document.querySelector(`.tab[onclick="switchTab('${tabName}')"]`).classList.add('active');
 
+    // If switching to preview, update the iframe with the code
     if (tabName === 'preview') {
         updatePreview();
     }
 }
 
+
 function updatePreview() {
-    const code = document.getElementById('codeArea').value;
+    const code = document.getElementById('codeArea').value; // Get the code from the Code tab
     const previewFrame = document.getElementById('previewFrame').contentDocument || document.getElementById('previewFrame').contentWindow.document;
     
-    // Open, write code into the iframe, and close it
-    previewFrame.open();
-    previewFrame.write(code);
-    previewFrame.close();
+    previewFrame.open();  // Open the iframe document
+    previewFrame.write(code);  // Write the code into the iframe
+    previewFrame.close();  // Close to render the code
 }
+
         function downloadCode() {
             const code = document.getElementById('codeArea').value;
             const blob = new Blob([code], { type: 'text/html' });
