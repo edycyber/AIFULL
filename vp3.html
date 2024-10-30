@@ -587,7 +587,7 @@ function signOut() {
 // Initialize the Firefox iframe to display as intended
 function initFirefoxBrowser() {
   const firefoxIframe = document.getElementById('firefox-browser');
-  firefoxIframe.src = 'install-firefox.sh'; // Use an internal URL or local server address here
+  firefoxIframe.src = 'https://www.mozilla.org/firefox/new/'; // Use an internal URL or local server address here
   firefoxIframe.style.display = 'flex'; // Ensure the iframe is visible
 }
 
@@ -596,7 +596,7 @@ document.addEventListener('DOMContentLoaded', initFirefoxBrowser);
 // Open Firefox within the iframe
 function launchFirefox() {
   const firefoxIframe = document.getElementById('firefox-browser');
-  firefoxIframe.src = 'install-firefox.sh'; // Adjust the URL to Firefox's executable location
+  firefoxIframe.src = 'https://www.mozilla.org/firefox/new/'; // Adjust the URL to Firefox's executable location
   firefoxIframe.style.display = 'flex'; // Display the iframe
 }
 
