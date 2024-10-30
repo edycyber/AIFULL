@@ -284,6 +284,39 @@
         height: 50vh;
     }
 }
+.browser-content {
+    padding: 10px;
+    height: calc(100% - 40px);
+}
+
+.search-bar {
+    display: flex;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-bar button {
+    padding: 8px 16px;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.browser-frame {
+    width: 100%;
+    height: calc(100% - 50px);
+    border: none;
+}
+         
 </style>
 </head>
 <body>
@@ -298,6 +331,14 @@
             <button class="sign-out" onclick="signOut()">Sign Out</button>
         </nav>
     </header>
+
+<div class="browser-content">
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search or enter web address">
+        <button onclick="performSearch()">Search</button>
+    </div>
+    <iframe id="browserFrame" class="browser-frame"></iframe>
+</div>
     
     <div class="main-container">
         <div class="iframe-section">
@@ -577,6 +618,31 @@ function dragWindowEnd(e) {
 function signOut() {
             window.location.href = 'index.html';
         }
+
+function performSearch() {
+    const searchInput = document.getElementById('searchInput');
+    const browserFrame = document.getElementById('browserFrame');
+    const searchQuery = searchInput.value.trim();
+    
+    if (searchQuery) {
+        // Check if it's a URL
+        if (searchQuery.startsWith('http://') || searchQuery.startsWith('https://')) {
+            browserFrame.src = searchQuery;
+        } else {
+            // Use Google search
+            browserFrame.src = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
+        }
+    }
+}
+
+// Add event listener for Enter key
+document.getElementById('searchInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        performSearch();
+    }
+});
+
+
 </script>
 </body>
 </html>
