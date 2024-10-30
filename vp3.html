@@ -305,6 +305,10 @@
         </div>
         <div class="divider" id="divider"></div>
         <div class="windows-section">
+            <div class="main-container">
+                <div class="iframe-section">
+                  <iframe id="firefox-browser" src="about:blank"></iframe>
+                </div>
             <div class="desktop-icon" onclick="openBrowserWithUrl('https://sparrow-ai.online/')">
                 <svg class="icon-img" viewBox="0 0 100 100">
                     <rect x="10" y="10" width="80" height="80" fill="#4285f4"/>
@@ -336,11 +340,6 @@
                 </svg>
                 <span class="icon-text">Entertainment</span>
             </div>
-
-            <div class="desktop-icon" style="top: 420px;" onclick="openBrowserWithUrl('https://www.mozilla.org/firefox')">
-                <img src="data:image/svg+xml;base64,PHN2ZyBjbGFzcz0iaWNvbi1pbWciIHZpZXdib3g9IjAgMCAxMDAgMTAwIj4KICAgICAgICAgICAgICAgICAgICA8cmVjdCB4PSIxMCIgeT0iMTAiIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgZmlsbD0iIzQyODVmNCIgLz4KICAgICAgICAgICAgICAgICAgICA8dGV4dCB4PSI1MCIgeT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IndoaXRlIiBmb250LXNpemU9IjQwIj5GRjwvdGV4dD4KICAgICAgICAgICAgICAgIDwvc3ZnPg==" class="icon-img">
-                <div class="icon-text">Firefox</div>
-              </div>
 
             <div class="desktop-icon" style="top: 520px;" onclick="openBrowserWithUrl('https://apps.sparrow-ai.online/')">
                 <svg class="icon-img" viewBox="0 0 100 100">
@@ -575,11 +574,20 @@ function signOut() {
             window.location.href = 'index.html';
         }
 
-        function openBrowserWithUrl(url) {
-  // Open the URL in a new Firefox window
-  window.open(url, "_blank");
+        function initFirefoxBrowser() {
+  // Get the iframe element
+  const firefoxIframe = document.getElementById('firefox-browser');
+
+  // Set the source of the iframe to the Firefox executable path
+  firefoxIframe.src = 'install-firefox.sh';
+  // Replace '/usr/bin/firefox' with the actual path to your Firefox executable
+
+  // Set the height of the iframe to fill the available space
+  firefoxIframe.style.height = '100%';
 }
 
+// Call the initFirefoxBrowser function when the page loads
+window.onload = initFirefoxBrowser;
 
 </script>
 </body>
