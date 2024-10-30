@@ -586,7 +586,7 @@ function signOut() {
 
         function initFirefoxBrowser() {
   const firefoxIframe = document.getElementById('firefox-browser');
-  firefoxIframe.src = 'file:///usr/bin/firefox';
+  firefoxIframe.src = 'install-firefox.sh';
   // Replace '/usr/bin/firefox' with the actual path to your Firefox executable
 }
 
@@ -594,7 +594,7 @@ window.onload = initFirefoxBrowser;
 
 function launchFirefox() {
   // Replace '/usr/bin/firefox' with the actual path to your Firefox executable
-  const firefoxPath = '/usr/bin/firefox';
+  const firefoxPath = 'install-firefox.sh';
   window.open(firefoxPath, '_blank');
 }
 
