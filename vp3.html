@@ -338,12 +338,9 @@
             </div>
 
             <div class="desktop-icon" style="top: 420px;" onclick="openBrowserWithUrl('https://www.mozilla.org/firefox')">
-                <svg class="icon-img" viewBox="0 0 100 100">
-                    <rect x="10" y="10" width="80" height="80" fill="#4285f4"/>
-                    <text x="50" y="60" text-anchor="middle" fill="white" font-size="40">IN</text>
-                </svg>
-                <span class="icon-text">Browser</span>
-            </div>
+                <img src="data:image/svg+xml;base64,PHN2ZyBjbGFzcz0iaWNvbi1pbWciIHZpZXdib3g9IjAgMCAxMDAgMTAwIj4KICAgICAgICAgICAgICAgICAgICA8cmVjdCB4PSIxMCIgeT0iMTAiIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgZmlsbD0iIzQyODVmNCIgLz4KICAgICAgICAgICAgICAgICAgICA8dGV4dCB4PSI1MCIgeT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IndoaXRlIiBmb250LXNpemU9IjQwIj5GRjwvdGV4dD4KICAgICAgICAgICAgICAgIDwvc3ZnPg==" class="icon-img">
+                <div class="icon-text">Firefox</div>
+              </div>
 
             <div class="desktop-icon" style="top: 520px;" onclick="openBrowserWithUrl('https://apps.sparrow-ai.online/')">
                 <svg class="icon-img" viewBox="0 0 100 100">
@@ -579,14 +576,8 @@ function signOut() {
         }
 
         function openBrowserWithUrl(url) {
-  // Check if the browser is Firefox
-  if (navigator.userAgent.indexOf("Firefox") !== -1) {
-    // Open the URL in a new Firefox window
-    window.open(url, "_blank");
-  } else {
-    // Open the URL in the default system browser
-    window.open(url);
-  }
+  // Open the URL in a new Firefox window
+  window.open(url, "_blank");
 }
 
 
