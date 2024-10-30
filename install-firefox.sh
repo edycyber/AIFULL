@@ -1,43 +1,27 @@
 #!/bin/bash
 
-# Error handling
-set -e
-
-install_firefox_linux() {
-    # Determine Linux distribution
-    if command -v apt-get &> /dev/null; then
-        # Ubuntu/Debian
-        sudo apt-get update
-        sudo apt-get install -y firefox
-    elif command -v dnf &> /dev/null; then
-        # CentOS/RHEL/Fedora
-        sudo dnf upgrade -y
-        sudo dnf install -y firefox
-    elif command -v yum &> /dev/null; then
-        # CentOS/RHEL
-        sudo yum update -y
-        sudo yum install -y firefox
-    else
-        echo "Error: Unable to determine Linux distribution. Please install Firefox manually."
-        exit 1
-    fi
-
-    # Verify installation
-    firefox --version
-}
-
-# Main execution
-echo "=== Firefox Installation Script for Linux ==="
-echo "This script will install Mozilla Firefox on your Linux system."
-
-# Check if running as root
-if [[ $EUID -ne 0 ]]; then
-   echo "This script must be run as root (sudo)." 
-   exit 1
+# Install Firefox and dependencies if they are not present
+if ! command -v firefox &> /dev/null
+then
+    echo "Firefox not found. Installing..."
+    sudo apt update
+    sudo apt install -y firefox
 fi
 
-# Install Firefox
-install_firefox_linux
+# Install Xvfb for a virtual display (headless mode)
+if ! command -v Xvfb &> /dev/null
+then
+    echo "Xvfb not found. Installing..."
+    sudo apt install -y xvfb
+fi
 
-echo "Firefox has been installed successfully!"
-echo "You can now launch Firefox from the command line or your desktop environment."
+# Start Xvfb for virtual display and run Firefox in headless mode
+Xvfb :99 -screen 0 1024x768x16 &  # Run Xvfb on display :99
+export DISPLAY=:99
+
+# Run Firefox with a specified URL or blank page in headless mode
+firefox --new-window "about:blank" &
+
+# Start a simple HTTP server on port 8000
+echo "Starting local server on http://localhost:8000"
+python3 -m http.server 8000
