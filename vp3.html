@@ -577,6 +577,19 @@ function dragWindowEnd(e) {
 function signOut() {
             window.location.href = 'index.html';
         }
+
+        function openBrowserWithUrl(url) {
+  // Check if the browser is Firefox
+  if (navigator.userAgent.indexOf("Firefox") !== -1) {
+    // Open the URL in a new Firefox window
+    window.open(url, "_blank");
+  } else {
+    // Open the URL in the default system browser
+    window.open(url);
+  }
+}
+
+
 </script>
 </body>
 </html>
