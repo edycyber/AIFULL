@@ -1,0 +1,582 @@
+<html><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sparrow AI - Virtual Desktop</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>">
+<style>
+:root {
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --primary-color: #3498db;
+            --secondary-color: #03dac6;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: var(--primary-color);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-right: 2rem;
+        }
+
+        .sign-out {
+            background-color: var(--secondary-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .sign-out:hover {
+            background-color: #02b39b;
+        }
+
+.taskbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(to bottom, #000000, #1a1a1a) !important;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 5px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.taskbar::-webkit-scrollbar {
+    height: 4px;
+}
+
+.taskbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.taskbar::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+}
+
+.taskbar-item {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    color: white;
+    font-size: 0.9rem;
+    border: none;
+    height: 30px;
+    min-width: 120px;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.taskbar-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.desktop-icon {
+    position: absolute;
+    width: 80px;
+    margin-bottom: 20px;
+    left: 20px;
+}
+
+.desktop-icon:nth-child(1) { top: 20px; }
+.desktop-icon:nth-child(2) { top: 120px; }
+.desktop-icon:nth-child(3) { top: 220px; }
+.desktop-icon:nth-child(4) { top: 320px; }
+.desktop-icon:nth-child(5) { top: 420px; }
+.desktop-icon:nth-child(6) { top: 520px; }
+.desktop-icon:nth-child(7) { top: 620px; }
+
+.icon-img {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 5px;
+}
+
+.icon-text {
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    font-size: 0.8rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+.main-container {
+    display: flex;
+    height: calc(100vh - 64px);
+}
+
+.iframe-section {
+    width: 33.33%;
+    height: 100%;
+    border-right: 2px solid #3d3d3d;
+    min-width: 200px;
+    max-width: 80%;
+}
+
+.divider {
+    width: 8px;
+    background: #3d3d3d;
+    cursor: col-resize;
+    height: 100%;
+}
+
+.divider:hover {
+    background: #4285f4;
+}
+
+.windows-section {
+    width: 66.67%;
+    height: 100%;
+    background-image: url('https://sparrow-ai.online/Virtualcomputer2.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    border: 1px solid #666;
+}
+
+.browser-window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    display: none;
+    flex-direction: column;
+    border: 1px solid #0078d7;
+}
+
+.browser-window.maximized {
+    position: absolute;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 0;
+}
+
+.window-header {
+    background: linear-gradient(to bottom, #0078d7, #0053a9);
+    padding: 8px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.window-title {
+    color: white;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.window-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.window-button {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+
+.window-button:hover {
+    filter: brightness(1.1);
+}
+
+.minimize {
+    background-color: #ffbd44;
+}
+
+.maximize {
+    background-color: #00ca4e;
+}
+
+.close {
+    background-color: #ff605c;
+}
+
+.window-content {
+    flex: 1;
+    width: 100%;
+    height: calc(100% - 36px);
+    background-color: white;
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+    }
+    
+    .iframe-section,
+    .windows-section {
+        width: 100%;
+        height: 50vh;
+    }
+}
+</style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="logo">Sparrow AI</li>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="profile.html">Profile</a></li>
+            </ul>
+            <button class="sign-out" onclick="signOut()">Sign Out</button>
+        </nav>
+    </header>
+    
+    <div class="main-container">
+        <div class="iframe-section">
+            <iframe src="https://veamoschat.netlify.app/" width="100%" height="100%" frameborder="0"></iframe>
+        </div>
+        <div class="divider" id="divider"></div>
+        <div class="windows-section">
+            <div class="desktop-icon" onclick="openBrowserWithUrl('https://sparrow-ai.online/')">
+                <svg class="icon-img" viewBox="0 0 100 100">
+                    <rect x="10" y="10" width="80" height="80" fill="#4285f4"/>
+                    <text x="50" y="60" text-anchor="middle" fill="white" font-size="40">LP</text>
+                </svg>
+                <span class="icon-text">Landing Pages</span>
+            </div>
+
+            <div class="desktop-icon" style="top: 120px;" onclick="openBrowserWithUrl('https://opensiliconvalley.sparrow-ai.online/index2')">
+                <svg class="icon-img" viewBox="0 0 100 100">
+                    <rect x="10" y="10" width="80" height="80" fill="#ea4335"/>
+                    <text x="50" y="60" text-anchor="middle" fill="white" font-size="40">SV</text>
+                </svg>
+                <span class="icon-text">Silicon Valley</span>
+            </div>
+
+            <div class="desktop-icon" style="top: 220px;" onclick="openBrowserWithUrl('https://apps.sparrow-ai.online/word')">
+                <svg class="icon-img" viewBox="0 0 100 100">
+                    <rect x="10" y="10" width="80" height="80" fill="#fbbc05"/>
+                    <text x="50" y="60" text-anchor="middle" fill="white" font-size="40">TL</text>
+                </svg>
+                <span class="icon-text">Text</span>
+            </div>
+
+            <div class="desktop-icon" style="top: 320px;" onclick="openBrowserWithUrl('https://apps.sparrow-ai.online/entertainment')">
+                <svg class="icon-img" viewBox="0 0 100 100">
+                    <rect x="10" y="10" width="80" height="80" fill="#34a853"/>
+                    <text x="50" y="60" text-anchor="middle" fill="white" font-size="40">E</text>
+                </svg>
+                <span class="icon-text">Entertainment</span>
+            </div>
+
+            <div class="desktop-icon" style="top: 420px;" onclick="openBrowserWithUrl('https://www.mozilla.org/firefox')">
+                <svg class="icon-img" viewBox="0 0 100 100">
+                    <rect x="10" y="10" width="80" height="80" fill="#4285f4"/>
+                    <text x="50" y="60" text-anchor="middle" fill="white" font-size="40">IN</text>
+                </svg>
+                <span class="icon-text">Browser</span>
+            </div>
+
+            <div class="desktop-icon" style="top: 520px;" onclick="openBrowserWithUrl('https://apps.sparrow-ai.online/')">
+                <svg class="icon-img" viewBox="0 0 100 100">
+                    <rect x="10" y="10" width="80" height="80" fill="#ea4335"/>
+                    <text x="50" y="60" text-anchor="middle" fill="white" font-size="40">APP</text>
+                </svg>
+                <span class="icon-text">Apps</span>
+            </div>
+
+            <div class="desktop-icon" style="top: 620px;" onclick="openBrowserWithUrl('https://www.wikipedia.org')">
+                <svg class="icon-img" viewBox="0 0 100 100">
+                    <rect x="10" y="10" width="80" height="80" fill="#fbbc05"/>
+                    <text x="50" y="60" text-anchor="middle" fill="white" font-size="40">WP</text>
+                </svg>
+                <span class="icon-text">Wikipedia</span>
+            </div>
+
+            <div class="desktop-icon" style="top: 720px;" onclick="openBrowserWithUrl('https://apps.sparrow-ai.online/calculator')">
+                <svg class="icon-img" viewBox="0 0 100 100">
+                    <rect x="10" y="10" width="80" height="80" fill="#fbbc05"/>
+                    <text x="50" y="60" text-anchor="middle" fill="white" font-size="40">C</text>
+                </svg>
+                <span class="icon-text">Calculator</span>
+            </div>      
+
+            <div class="browser-window" id="browserWindow">
+                <div class="window-header">
+                    <div class="window-title">Sparrow AI Browser</div>
+                    <div class="window-controls">
+                        <button class="window-button minimize" onclick="minimizeBrowser()"></button>
+                        <button class="window-button maximize" onclick="maximizeBrowser()"></button>
+                        <button class="window-button close" onclick="closeBrowser()"></button>
+                    </div>
+                </div>
+                <iframe class="window-content" src="https://www.google.com" frameborder="0"></iframe>
+            </div>
+
+            <div class="taskbar" id="taskbar">
+                <!-- Minimized windows will appear here -->
+            </div>
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('.nav-button');
+    buttons.forEach(button => {
+        button.addEventListener('click', function() {
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 100);
+        });
+    });
+
+    const browserWindow = document.getElementById('browserWindow');
+    const browserContent = document.querySelector('.window-content');
+
+    const desktopIcons = document.querySelectorAll('.desktop-icon');
+
+    desktopIcons.forEach(icon => {
+        icon.addEventListener('click', function() {
+            const url = this.getAttribute('onclick').match(/'([^']+)'/)[1];
+            openBrowserWithUrl(url);
+        });
+    });
+
+    const divider = document.getElementById('divider');
+    const iframeSection = document.querySelector('.iframe-section');
+    const windowsSection = document.querySelector('.windows-section');
+    
+    let isResizing = false;
+    
+    divider.addEventListener('mousedown', (e) => {
+        isResizing = true;
+        document.body.style.cursor = 'col-resize';
+    });
+    
+    document.addEventListener('mousemove', (e) => {
+        if (!isResizing) return;
+        
+        const containerWidth = document.querySelector('.main-container').clientWidth;
+        let newWidth = e.clientX;
+        
+        if (newWidth < 200) newWidth = 200;
+        if (newWidth > containerWidth * 0.8) newWidth = containerWidth * 0.8;
+        
+        iframeSection.style.width = `${newWidth}px`;
+        windowsSection.style.width = `calc(100% - ${newWidth}px)`;
+    });
+    
+    document.addEventListener('mouseup', () => {
+        isResizing = false;
+        document.body.style.cursor = 'default';
+    });
+});
+
+// Browser window functionality
+function openBrowserWithUrl(url) {
+    const browserWindow = document.getElementById('browserWindow');
+    const browserContent = document.querySelector('.window-content');
+    browserWindow.style.display = 'flex';
+    browserContent.src = url;
+    
+    // Reset window position when opening new URL
+    browserWindow.style.transform = 'translate(-50%, -50%)';
+    xWindowOffset = 0;
+    yWindowOffset = 0;
+}
+
+function closeBrowser() {
+    const browserWindow = document.getElementById('browserWindow');
+    const browserContent = document.querySelector('.window-content');
+    const currentUrl = browserContent.src;
+    const windowTitle = document.querySelector('.window-title').textContent;
+    
+    browserWindow.style.display = 'none';
+    browserContent.src = 'about:blank';
+    
+    const taskbarItem = document.querySelector(`[data-window="${windowTitle}-${currentUrl}"]`);
+    if (taskbarItem) {
+        taskbarItem.remove();
+    }
+}
+
+function minimizeBrowser() {
+    const browserWindow = document.getElementById('browserWindow');
+    const taskbar = document.getElementById('taskbar');
+    const windowTitle = document.querySelector('.window-title').textContent;
+    const browserContent = document.querySelector('.window-content');
+    const currentUrl = browserContent.src;
+    
+    // Just hide the window, don't reset anything
+    browserWindow.style.display = 'none';
+    
+    // Only add to taskbar if this window isn't already there
+    if (!document.querySelector(`[data-window="${windowTitle}-${currentUrl}"]`)) {
+        const taskbarItem = document.createElement('button');
+        taskbarItem.className = 'taskbar-item';
+        taskbarItem.setAttribute('data-window', `${windowTitle}-${currentUrl}`);
+        taskbarItem.innerHTML = `
+            <svg width="16" height="16" viewBox="0 0 16 16">
+                <rect x="2" y="2" width="12" height="12" fill="#4285f4"/>
+            </svg>
+            ${new URL(currentUrl).hostname}
+        `;
+        
+        taskbarItem.addEventListener('click', () => {
+            // Show the browser window with its existing content
+            browserWindow.style.display = 'flex';
+            browserContent.src = currentUrl; // Ensure the correct URL is loaded
+        });
+        
+        taskbar.appendChild(taskbarItem);
+    }
+}
+
+function maximizeBrowser() {
+    const browserWindow = document.getElementById('browserWindow');
+    const windowsSection = document.querySelector('.windows-section');
+    
+    // Toggle maximized state
+    if (browserWindow.classList.contains('maximized')) {
+        // Restore to previous position
+        browserWindow.classList.remove('maximized');
+        browserWindow.style.transform = `translate(${xWindowOffset}px, ${yWindowOffset}px)`;
+        browserWindow.style.width = '80%';
+        browserWindow.style.height = '80%';
+    } else {
+        // Maximize
+        browserWindow.classList.add('maximized');
+        browserWindow.style.transform = 'none';
+        browserWindow.style.width = '100%';
+        browserWindow.style.height = '100%';
+        browserWindow.style.top = '0';
+        browserWindow.style.left = '0';
+    }
+}
+
+document.querySelector('.iframe-section iframe').onerror = function() {
+    const iframe = this;
+    iframe.src = 'about:blank';
+    iframe.srcdoc = '<h2>Unable to load content. Please try again later.</h2>';
+};
+
+// Make the Browser window draggable
+const browserWindow = document.getElementById('browserWindow');
+const windowHeader = document.querySelector('.window-header');
+
+let isDraggingWindow = false;
+let currentWindowX;
+let currentWindowY;
+let initialWindowX;
+let initialWindowY;
+let xWindowOffset = 0;
+let yWindowOffset = 0;
+
+windowHeader.addEventListener('mousedown', dragWindowStart);
+document.addEventListener('mousemove', dragWindow);
+document.addEventListener('mouseup', dragWindowEnd);
+
+function dragWindowStart(e) {
+    if (e.target.classList.contains('window-button')) return;
+    
+    initialWindowX = e.clientX - xWindowOffset;
+    initialWindowY = e.clientY - yWindowOffset;
+
+    if (e.target === windowHeader || e.target.parentElement === windowHeader) {
+        isDraggingWindow = true;
+    }
+}
+
+function dragWindow(e) {
+    if (isDraggingWindow) {
+        e.preventDefault();
+        currentWindowX = e.clientX - initialWindowX;
+        currentWindowY = e.clientY - initialWindowY;
+
+        xWindowOffset = currentWindowX;
+        yWindowOffset = currentWindowY;
+
+        browserWindow.style.transform = `translate(${currentWindowX}px, ${currentWindowY}px)`;
+    }
+}
+
+function dragWindowEnd(e) {
+    initialWindowX = currentWindowX;
+    initialWindowY = currentWindowY;
+    isDraggingWindow = false;
+}
+function signOut() {
+            window.location.href = 'index.html';
+        }
+</script>
+</body>
+</html>
