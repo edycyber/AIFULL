@@ -584,19 +584,28 @@ function signOut() {
             window.location.href = 'index.html';
         }
 
-        function initFirefoxBrowser() {
+// Initialize the Firefox iframe to display as intended
+function initFirefoxBrowser() {
   const firefoxIframe = document.getElementById('firefox-browser');
-  firefoxIframe.src = 'install-firefox.sh';
-  // Replace '/usr/bin/firefox' with the actual path to your Firefox executable
+  firefoxIframe.src = 'install-firefox.sh'; // Use an internal URL or local server address here
+  firefoxIframe.style.display = 'flex'; // Ensure the iframe is visible
 }
 
-window.onload = initFirefoxBrowser;
+document.addEventListener('DOMContentLoaded', initFirefoxBrowser);
 
+// Open Firefox within the iframe
 function launchFirefox() {
-  // Replace '/usr/bin/firefox' with the actual path to your Firefox executable
-  const firefoxPath = 'install-firefox.sh';
-  window.open(firefoxPath, '_blank');
+  const firefoxIframe = document.getElementById('firefox-browser');
+  firefoxIframe.src = 'install-firefox.sh'; // Adjust the URL to Firefox's executable location
+  firefoxIframe.style.display = 'flex'; // Display the iframe
 }
+
+// Updated event listener for the Firefox icon
+document.querySelector('.desktop-icon[onclick="launchFirefox()"]').onclick = function() {
+  launchFirefox();
+};
+
+
 
 </script>
 </body>
