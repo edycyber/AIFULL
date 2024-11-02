@@ -1,10 +1,18 @@
-function validate() {
+// validate.js
+async function validate() {
     const code = document.getElementById('codeInput').value.trim();
     
-    const validCodes = ['AI1532','BPAI-65hgt33','PPAI-27jkhg7',
-                       ];
-
-    if (validCodes.includes(code)) {
+    const response = await fetch('/validate-code', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code }),
+    });
+    
+    const result = await response.json();
+    
+    if (result.success) {
         window.location.href = 'home.html';
     } else {
         window.location.href = 'https://sparrowaionline.gumroad.com/l/premiumplanAI';
