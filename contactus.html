@@ -140,6 +140,28 @@
         form {
             display: flex;
             flex-direction: column;
+
+        /* New CSS for side-by-side layout */
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.content {
+    flex: 1;
+}
+
+.container {
+    flex: 1;
+    max-width: 400px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 2rem;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+}
       </style>
 </head>
 <body>
@@ -154,32 +176,37 @@
             <button class="sign-out" onclick="signOut()">Sign Out</button>
         </nav>
     </header>
-    <div class="content">
-        <div class="card">
-            <img src="texter.png" alt="Texter Image">
-            <div class="card-content">
-                <h2 class="card-title">Contact us</h2>
-                <p class="card-description">
-                    Thank you for being part of Sparrow AI. Fill in the required fields and we will get in touch with you.
-                </p>      
-            </div>
-        </div>   
+    <!-- New wrapper to hold content and form side by side -->
+    <div class="main-container">
+        <div class="content">
+            <div class="card">
+                <img src="texter.png" alt="Texter Image">
+                <div class="card-content">
+                    <h2 class="card-title">Contact us</h2>
+                    <p class="card-description">
+                        Thank you for being part of Sparrow AI. Fill in the required fields and we will get in touch with you.
+                    </p>      
+                </div>
+            </div>   
+        </div>
+        <div class="container">
+            <h1>Complete the information</h1>
+            <form action="https://formsubmit.co/56094970f84f2fdfc62ce81e85e26dc7" method="POST">
+                <input type="text" name="name" required placeholder="Name">
+                <input type="email" name="email" required placeholder="Email">
+                <input type="text" name="subject" required placeholder="Subject">
+                <textarea name="message" required placeholder="Message"></textarea>
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
     </div>
-    <div class="container">
-        <h1>Complete the information</h1>
-        <form action="https://formsubmit.co/56094970f84f2fdfc62ce81e85e26dc7" method="POST">
-            <input type="text" name="name" required placeholder="Name">
-            <input type="email" name="email" required placeholder="Email">
-            <input type="text" name="subject" required placeholder="Subject">
-            <textarea name="message" required placeholder="Message"></textarea>
-            <input type="hidden" name="_template" value="table">
-            <button type="submit">Submit</button>
-        </form>
-    </div>
-  <script>
+
+    <script>
         function signOut() {
             window.location.href = 'index.html';
         }
-  </script>
+    </script>
 </body>
 </html>
