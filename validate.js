@@ -5,9 +5,9 @@ function validate() {
                        ];
 
     if (validCodes.includes(code)) {
-        window.location.href = 'choose.html';
+        window.location.href = 'home.html';
     } else {
-        window.location.href = 'https://sparrow-ai.online/premiumplan';
+        window.location.href = 'https://sparrowaionline.gumroad.com/l/premiumplanAI';
     }
 }
 
