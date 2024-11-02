@@ -2,7 +2,7 @@
 async function validate() {
     const code = document.getElementById('codeInput').value.trim();
     
-    const response = await fetch('/VALID_CODES', {
+    const response = await fetch('/validate-code', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -18,3 +18,7 @@ async function validate() {
         window.location.href = 'https://sparrowaionline.gumroad.com/l/premiumplanAI';
     }
 }
+
+require('dotenv').config();
+const validCodes = process.env.VALID_CODES.split(',');
+
