@@ -19,6 +19,5 @@ async function validate() {
     }
 }
 
-require('dotenv').config();
-const validCodes = process.env.VALID_CODES.split(',');
+
 
