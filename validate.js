@@ -2,7 +2,7 @@
 async function validate() {
     const code = document.getElementById('codeInput').value.trim();
     
-    const response = await fetch('/validate-code', {
+    const response = await fetch('/VALID_CODES', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
