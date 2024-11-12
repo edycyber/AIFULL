@@ -1,7 +1,7 @@
 {
     "name": "Sparrow AI App",
     "short_name": "Sparrow AI App",
-    "start_url": "/",
+    "start_url": "https://app.sparrow-ai.online/manifest.json",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#000000",
