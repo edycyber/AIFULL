@@ -426,15 +426,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-P67XN5CR');</script>
 <!-- End Google Tag Manager -->
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#000000">
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-      navigator.serviceWorker.register('/service-worker.js');
-    });
-  }
-</script>
   </header>
 <body>
   <main>
@@ -790,5 +781,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   // Start the auto-slide when page loads
   startAutoSlide();
   </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then((registration) => {
+            console.log('Service Worker registrado con éxito:', registration);
+          })
+          .catch((error) => {
+            console.log('Error al registrar el Service Worker:', error);
+          });
+      });
+    }
+  </script>  
 </body>
 </html>
