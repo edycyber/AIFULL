@@ -15,7 +15,7 @@ const aiMovieDatabase = [
         url: "https://www.youtube.com/embed/xr1-ToY24Cg"
     },
     {
-        title: "Harry Potter and the Blue Ogre's Secret",
+        title: "Harry Potter and the Blue Ogre Secret",
         description: "Deep dive into machine learning technologies",
         url: "https://www.youtube.com/embed/EneLT78nTvg"
     },
@@ -35,8 +35,8 @@ const aiMovieDatabase = [
         url: "https://www.youtube.com/embed/ZtxAD01inyo" 
     },
     {
-        title: "Curse of the Inca's Gold",
-        description: "Curse of the Inca's Gold",
+        title: "Curse of the Inca Gold",
+        description: "Curse of the Inca Gold",
         url: "https://www.youtube.com/embed/E0y1M4gTej4" 
     },
 	{
