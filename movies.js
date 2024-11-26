@@ -55,13 +55,13 @@ const aiMovieDatabase = [
         url: "https://www.youtube.com/embed/BlESSYOZ5Ss"
     },
     {
-        title: "Cars show: The Ferrari 812 GTS ",
-        description: "Cars show: The Ferrari 812 GTS ",
+        title: "Cars show: The Ferrari 812 GTS",
+        description: "Cars show: The Ferrari 812 GTS",
         url: "https://www.youtube.com/embed/-70gmPPeyXc"
     },
     {
         title: "THE VELOCIRAPTOR",
-        description: "THE VELOCIRAPTOR
+        description: "THE VELOCIRAPTOR",
         url: "https://www.youtube.com/embed/36FJIoYFhu0/" 
     },
     {
@@ -111,7 +111,7 @@ const aiMovieDatabase = [
     },
     {
         title: "Ofeina",
-        description: "Ofeina. Ai artist",
+        description: "Ofeina. AI artist",
         url: "https://www.youtube.com/embed/62yJJbHijLE" 
     },
 	  {
