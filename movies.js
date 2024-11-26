@@ -76,7 +76,7 @@ const aiMovieDatabase = [
     },
     {
         title: "Angels vs Demons. Episode 5 The Battle on New York  City",
-        description: "Curse of the Inca's Gold",
+        description: "Curse of the Inca Gold",
         url: "https://www.youtube.com/embed/AI4yjQ-6mxk" 
     },
 	{
