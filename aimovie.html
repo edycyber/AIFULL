@@ -244,6 +244,17 @@ iframe {
 </div>
 <script src="movies.js"></script>
 <script>
+let currentMovie = null;
+
+function findMovie(query) {
+    if (typeof aiMovieDatabase === 'undefined') {
+        console.error("Error: aiMovieDatabase is not defined. Ensure movies.js is loaded correctly.");
+        return null;
+    }
+    query = query.toLowerCase();
+    return aiMovieDatabase.find(movie => movie.title.toLowerCase().includes(query));
+}
+
 function sendMessage() {
     const input = document.getElementById('userInput');
     const message = input.value.trim();
@@ -255,13 +266,15 @@ function sendMessage() {
 
     addMessage(message, 'user');
 
-    const movie = aiMovieDatabase.find(movie => movie.title.toLowerCase().includes(message.toLowerCase()));
+    const movie = findMovie(message);
 
     setTimeout(() => {
         if (movie) {
-            addMessage(`Found: "${movie.title}".`, 'bot');
+            currentMovie = movie;
+            addMessage(`Yes, I have it! Enjoy watching "${movie.title}"!`, 'bot');
+            addPlayButton(movie.title);
         } else {
-            addMessage("Sorry, I couldn't find that movie.", 'bot');
+            addMessage("I'm sorry, I couldn't find a movie matching your request. Try another title.", 'bot');
         }
     }, 500);
 
@@ -276,7 +289,39 @@ function addMessage(text, sender) {
     chatMessages.appendChild(messageDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
+
+function addPlayButton(title) {
+    const chatMessages = document.getElementById('chatMessages');
+    const buttonDiv = document.createElement('div');
+    buttonDiv.className = 'message bot';
+    const playButton = document.createElement('button');
+    playButton.textContent = `▶️ Play ${title}`;
+    playButton.onclick = playMovie;
+    buttonDiv.appendChild(playButton);
+    chatMessages.appendChild(buttonDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function playMovie() {
+    if (currentMovie) {
+        const videoPlayer = document.getElementById('videoPlayer');
+        videoPlayer.innerHTML = `
+            <iframe
+                src="${currentMovie.url}"
+                title="${currentMovie.title}"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>`;
+    }
+}
+
+document.getElementById('userInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        sendMessage();
+    }
+});
 </script>
 </body>
 </html>
+
 
