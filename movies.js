@@ -1,5 +1,4 @@
-// Wrap the database in a way that ensures global accessibility
-window.aiMovieDatabase = [
+const aiMovieDatabase = [
     {
         title: "Alien",
         description: "Comprehensive documentary about artificial intelligence revolution",
