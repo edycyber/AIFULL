@@ -190,7 +190,6 @@ iframe {
 
 .play-button {
     margin-top: 10px;
-    display: none;
 }
 
 @media (max-width: 768px) {
@@ -243,6 +242,10 @@ iframe {
 <script src="movies.js"></script>
 <script>
 function findMovie(query) {
+    if (typeof aiMovieDatabase === 'undefined') {
+        console.error("Error: aiMovieDatabase is not defined. Ensure movies.js is loaded correctly.");
+        return null;
+    }
     query = query.toLowerCase();
     return aiMovieDatabase.find(movie => movie.title.toLowerCase().includes(query));
 }
@@ -253,23 +256,26 @@ function sendMessage() {
     const input = document.getElementById('userInput');
     const message = input.value.trim();
     
-    if (message) {
-        addMessage(message, 'user');
-        
-        const movie = findMovie(message);
-        
-        setTimeout(() => {
-            if (movie) {
-                currentMovie = movie;
-                addMessage(`Yes, I have it! Enjoy watching "${movie.title}"!`, 'bot');
-                addPlayButton(movie.title);
-            } else {
-                addMessage("I'm sorry, I couldn't find a movie matching your request. Try asking about AI, artificial intelligence, or machine learning.", 'bot');
-            }
-        }, 500);
-        
-        input.value = '';
+    if (!message) {
+        alert("Please enter a message.");
+        return;
     }
+
+    addMessage(message, 'user');
+
+    const movie = findMovie(message);
+
+    setTimeout(() => {
+        if (movie) {
+            currentMovie = movie;
+            addMessage(`Yes, I have it! Enjoy watching "${movie.title}"!`, 'bot');
+            addPlayButton(movie.title);
+        } else {
+            addMessage("I'm sorry, I couldn't find a movie matching your request. Try another title.", 'bot');
+        }
+    }, 500);
+
+    input.value = '';
 }
 
 function addMessage(text, sender) {
