@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Movie Recommender</title>
+<title>AI Movie Club</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>">
 <style>
 :root {
     --dark-bg: #1a1a1a;
@@ -31,6 +32,62 @@ body {
     display: flex;
     height: 100vh;
 }
+
+header {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: var(--primary-color);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-right: 2rem;
+        }
+
+        .sign-out {
+            background-color: var(--secondary-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .sign-out:hover {
+            background-color: #02b39b;
+        }
 
 .chat-column {
     width: 33.33%;
@@ -149,6 +206,17 @@ iframe {
 </style>
 </head>
 <body>
+ <header>
+        <nav>
+            <ul>
+                <li class="logo">Sparrow AI</li>
+                <li><a href="#home">Home</a></li>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="profile.html">Profile</a></li>
+            </ul>
+            <button class="sign-out" onclick="signOut()">Sign Out</button>
+        </nav>
+    </header>
 <div class="container">
     <div class="chat-column">
         <div class="chat-header">
