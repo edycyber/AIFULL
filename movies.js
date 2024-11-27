@@ -118,5 +118,430 @@ const aiMovieDatabase = [
         title: "Maddy",
         description: "Maddy",
         url: "https://www.youtube.com/embed/Hwh-rjeDK6A"
+    },
+    {
+        title: "Starcraft",
+        description: "Starcraft",
+        url: "https://www.youtube.com/embed/UtOQgw7WEBU"
+    },
+    {
+        title: "Aladdin 1950s",
+        description: "Aladdin 1950s",
+        url: "https://www.youtube.com/embed/qkPJoAdPveY"
+    },
+    {
+        title: "Frostpunk 1950s",
+        description: "Frostpunk 1950s",
+        url: "https://www.youtube.com/embed/ivIB0y3KsrE"
+    },
+    {
+        title: "Street Fighter 1950s ",
+        description: "Street Fighter 1950s ",
+        url: "https://www.youtube.com/embed/R8W2z9ALW-M"
+    },
+    {
+        title: "John Carter",
+        description: "John Carter",
+        url: "https://www.youtube.com/embed/R47mVctafGs" 
+    },
+    {
+        title: "Mars",
+        description: "Mars",
+        url: "https://www.youtube.com/embed/R47mVctafGs" 
+    },
+    {
+        title: "The Hidden War of Magic",
+        description: "The Hidden War of Magic",
+        url: "https://www.youtube.com/embed/bUoqcQbl5GI" 
+    },
+    {
+        title: "Frozen",
+        description: "Frozen",
+        url: "https://www.youtube.com/embed/2RIXeBgWmyY" 
+    },
+	{
+        title: "Dune precuelas",
+        description: "Dune precuelas",
+        url: "https://www.youtube.com/embed/_Dfuz7TH1DI"
+    },
+    {
+        title: "Dynamo Dream ",
+        description: "Dynamo Dream ",
+        url: "https://www.youtube.com/embed/dTRcX97DBsM"
+    },
+    {
+        title: "Alice in Wonderland",
+        description: "Alice in Wonderland",
+        url: "https://www.youtube.com/embed/A15adY86t0Q"
+    },
+    {
+        title: "Mulan",
+        description: "Mulan",
+        url: "https://www.youtube.com/embed/Hwvj_Zp42E0"
+    },
+    {
+        title: "The Forbin Project",
+        description: "The Forbin Project",
+        url: "https://www.youtube.com/embed/iysCaE_Pv7E" 
+    },
+    {
+        title: "The War",
+        description: "The War",
+        url: "https://www.youtube.com/embed/iysCaE_Pv7E" 
+    },
+    {
+        title: "Star Wars",
+        description: "Star Wars",
+        url: "https://www.youtube.com/embed/sQwdZuTmja0" 
+    },
+    {
+        title: "The Lord of The Rings",
+        description: "The Lord of The Rings",
+        url: "https://www.youtube.com/embed/R1NbdqgAk6A" 
+    },
+	{
+        title: "House of the Dragon",
+        description: "House of the Dragon",
+        url: "https://www.youtube.com/embed/BlrmBwXOtts"
+    },
+    {
+        title: "Frankenstein",
+        description: "Frankenstein",
+        url: "https://www.youtube.com/embed/EkWP-Krl7n8"
+    },
+    {
+        title: "Game of Thrones",
+        description: "Game of Thrones",
+        url: "https://www.youtube.com/embed/pLRpHst6Rjk"
+    },
+    {
+        title: "The Tenth Victim",
+        description: "The Tenth Victim",
+        url: "https://www.youtube.com/embed/Bgf5T_RqSz8" 
+    },
+    {
+        title: "The Raptor Queen",
+        description: "The Raptor Queen",
+        url: "https://www.youtube.com/embed/QHXqVlF21Jo" 
+    },
+    {
+        title: "Rebecca",
+        description: "Rebecca",
+        url: "https://www.youtube.com/embed/BLjr-jsTNh8" 
+    },
+    {
+        title: "Mirror",
+        description: "Mirror",
+        url: "https://www.youtube.com/embed/pi9QagyWlg4" 
+    },
+	{
+        title: "James Bond 007",
+        description: "James Bond 007",
+        url: "https://www.youtube.com/embed/6zlhhnbOb2Q"
+    },
+	{
+        title: "Tron",
+        description: "Tron",
+        url: "https://www.youtube.com/embed/xGsOZL7VcK0"
+    },
+    {
+        title: "Avatar",
+        description: "Avatar",
+        url: "https://www.youtube.com/embed/SGN4o4k6MEM"
+    },
+    {
+        title: "The Mandalorian",
+        description: "The Mandalorian",
+        url: "https://www.youtube.com/embed/7NBGtTzoeMA"
+    },
+    {
+        title: "Skyrim",
+        description: "Skyrim",
+        url: "https://www.youtube.com/embed/U4opI6UbLcw"
+    },
+    {
+        title: "Stranded on Dagobah",
+        description: "Stranded on Dagobah",
+        url: "https://www.youtube.com/embed/gn4l1tPm5R8" 
+    },
+    {
+        title: "Luke Skywalker",
+        description: "Luke Skywalker",
+        url: "https://www.youtube.com/embed/gn4l1tPm5R8" 
+    },
+    {
+        title: "Jedy",
+        description: "Jedy",
+        url: "https://www.youtube.com/embed/gn4l1tPm5R8" 
+    },
+    {
+        title: "The Pirates of the Caribbean",
+        description: "The Pirates of the Caribbean",
+        url: "https://www.youtube.com/embed/i_pRaiOI4vI" 
+    },
+	{
+        title: "Halo",
+        description: "Halo",
+        url: "https://www.youtube.com/embed/B44d3MGjfHQ"
+    },
+    {
+        title: "The Fall of Gondolin",
+        description: "The Fall of Gondolin",
+        url: "https://www.youtube.com/embed/9E3ov7DkzqI"
+    },
+    {
+        title: "Shrek",
+        description: "Shrek",
+        url: "https://www.youtube.com/embed/-ARI44FqhAI"
+    },
+    {
+        title: "The Legend of Zelda",
+        description: "The Legend of Zelda",
+        url: "https://www.youtube.com/embed/LMmVw2yd7VI"
+    },
+	{
+        title: "Ancient Sparta",
+        description: "Ancient Sparta",
+        url: "https://www.youtube.com/embed/7ByRGN1O5Ig" 
+    },
+	{
+        title: "Mechanical Hearts",
+        description: "Mechanical Hearts",
+        url: "https://www.youtube.com/embed/0MiYELivmXE" 
+    },
+    {
+        title: "Chromatic Halloween",
+        description: "Chromatic Halloween",
+        url: "https://www.youtube.com/embed/HR1s65LJ2wk" 
+    },
+    {
+        title: "Cold Hearted Spies",
+        description: "Cold Hearted Spies",
+        url: "https://www.youtube.com/embed/5yRsEzbcopI" 
+    },
+	{
+        title: "Monaco Royale",
+        description: "Monaco Royale",
+        url: "https://www.youtube.com/embed/rLmoukK2HIo"
+    },
+    {
+        title: "League of Legends",
+        description: "League of Legends",
+        url: "https://www.youtube.com/embed/U1MuRm8hyPM"
+    },
+    {
+        title: "Egyptian Gods come to lif",
+        description: "Egyptian Gods come to lif",
+        url: "https://www.youtube.com/embed/OqdyBLhKAvM"
+    },
+    {
+        title: "Blast to the Future ",
+        description: "Blast to the Future ",
+        url: "https://www.youtube.com/embed/Dz0nN9G8zbY" 
+    },
+    {
+        title: "A glimpse of Nostalgia",
+        description: "A glimpse of Nostalgia",
+        url: "https://www.youtube.com/embed/7GHO_wrkbwE" 
+    },
+    {
+        title: "Mnemonade",
+        description: "Mnemonade",
+        url: "https://www.youtube.com/embed/_tIm8GBKRJ0" 
+    },
+    {
+        title: "The Enchanted Forest ",
+        description: "The Enchanted Forest ",
+        url: "https://www.youtube.com/embed/KwXHew2Vqfk" 
+    },
+	{
+        title: "The Flintstones",
+        description: "The Flintstones",
+        url: "https://www.youtube.com/embed/RZ-i3ni8h5A"
+    },
+	{
+        title: "Back to the Future",
+        description: "Back to the Future",
+        url: "https://www.youtube.com/embed/zFM6SpWGjLg"
+    },
+	{
+        title: "Tomb Raider",
+        description: "Tomb Raider",
+        url: "https://www.youtube.com/embed/0Kgbb-syud0"
+    },
+	{
+        title: "Lara Croft",
+        description: "Lara Croft",
+        url: "https://www.youtube.com/embed/0Kgbb-syud0"
+    },
+	{
+        title: "Legends of the Groove",
+        description: "Legends of the Groove",
+        url: "https://www.youtube.com/embed/tqLYhFvxC9w"
+    },
+	{
+        title: "Mortal Kombat",
+        description: "Mortal Kombat",
+        url: "https://www.youtube.com/embed/9w02EDhlrJo"
+    },
+	{
+        title: "Street Fighter",
+        description: "Street Fighter",
+        url: "https://www.youtube.com/embed/1RJ4BMB0tzQ"
+    },
+	{
+        title: "Gears Girls and Glory",
+        description: "Gears Girls and Glory",
+        url: "https://www.youtube.com/embed/CSxd3U2W2R8"
+    },
+	{
+        title: "Hulk",
+        description: "Hulk",
+        url: "https://www.youtube.com/embed/n4AH4PjHJMs"
+    },
+	{
+        title: "The Avengers",
+        description: "The Avengers",
+        url: "https://www.youtube.com/embed/jdD_QQjaozs"
+    },
+	{
+        title: "RoboCop ",
+        description: "RoboCop",
+        url: "https://www.youtube.com/embed/YjirVy5Q49w"
+    },
+	{
+        title: "The Matrix",
+        description: "The Matrix",
+        url: "https://www.youtube.com/embed/4GpUZCgXKhg"
+    },
+	{
+        title: "Underworld",
+        description: "Underworld",
+        url: "https://www.youtube.com/embed/YOn1P9DcwhU"
+    },
+	{
+        title: "The Terminator",
+        description: "The Terminator",
+        url: "https://www.youtube.com/embed/HTJ6ig5qjqs"
+    },
+	{
+        title: "King Arthur: Legend of the Sword ",
+        description: "King Arthur: Legend of the Sword ",
+        url: "https://www.youtube.com/embed/3NDjz0in1fw"
+    },
+	{
+        title: "The Jungle Book",
+        description: "The Jungle Book",
+        url: "https://www.youtube.com/embed/7jSaWWu7-OI"
+    },
+	{
+        title: "Tarzan",
+        description: "Tarzan",
+        url: "https://www.youtube.com/embed/RaYjKg7Gokw"
+    },
+	{
+        title: "The Mummy",
+        description: "The Mummy",
+        url: "https://www.youtube.com/embed/wSvs8uDegW8"
+    },
+	{
+        title: "Van Helsing",
+        description: "Van Helsing",
+        url: "https://www.youtube.com/embed/r8h-cXY-nio"
+    },
+	{
+        title: "Garfield",
+        description: "Garfield",
+        url: "https://www.youtube.com/embed/DCRhvpbY7FQ"
+    },
+	{
+        title: "Captain Future",
+        description: "Captain Future",
+        url: "https://www.youtube.com/embed/gwhKtapkWhY"
+    },
+	{
+        title: "Avengers",
+        description: "Avengers",
+        url: "https://www.youtube.com/embed/vuu8j6boMKY"
+    },
+	{
+        title: "Beauty and the Beast ",
+        description: "Beauty and the Beast ",
+        url: "https://www.youtube.com/embed/Wl2WDkbtBm8"
+    },
+	{
+        title: "Godzilla vs. Kong",
+        description: "Godzilla vs. Kong",
+        url: "https://www.youtube.com/embed/mwgmFcdSyFo"
+    },
+	{
+        title: "Wonder Woman",
+        description: "Wonder Woman",
+        url: "https://www.youtube.com/embed/pj4QMEedi10"
+    },
+	{
+        title: "The Lord of the Rings",
+        description: "The Lord of the Rings",
+        url: "https://www.youtube.com/embed/HAGrkUGoZ-Y"
+    },
+	{
+        title: "Squid Game",
+        description: "Squid Game",
+        url: "https://www.youtube.com/embed/vk99nz4DgvI"
+    },
+	{
+        title: "Jurassic World",
+        description: "Jurassic World",
+        url: "https://www.youtube.com/embed/wT3Wbptz-U0"
+    },
+	{
+        title: "Scooby-Doo",
+        description: "Scooby-Doo",
+        url: "https://www.youtube.com/embed/AhbPmdny43g"
+    },
+	{
+        title: "Snow White and the Seven Dwarfs",
+        description: "Snow White and the Seven Dwarfs",
+        url: "https://www.youtube.com/embed/q2jzqFaXX2g"
+    },
+	{
+        title: "Hellboy",
+        description: "Hellboy",
+        url: "https://www.youtube.com/embed/dkCTHaLuLRQ"
+    },
+	{
+        title: "Venom",
+        description: "Venom",
+        url: "https://www.youtube.com/embed/iFx3yvFwNmM"
+    },
+	{
+        title: "Ace Ventura",
+        description: "Ace Ventura",
+        url: "https://www.youtube.com/embed/Joo5AG-ReXg"
+    },
+	{
+        title: "Watchmen",
+        description: "Watchmen",
+        url: "https://www.youtube.com/embed/sn4okTVYmGM"
+    },
+	{
+        title: "Sin City",
+        description: "Sin City",
+        url: "https://www.youtube.com/embed/f4fUXLLL3wQ"
+    },
+	{
+        title: "Twilight",
+        description: "Twilight",
+        url: "https://www.youtube.com/embed/DOO12s2bXyA"
+    },
+	{
+        title: "Coco",
+        description: "Coco",
+        url: "https://www.youtube.com/embed/n-vko6cFHkc"
+    },
+	{
+        title: "Identity",
+        description: "Identity",
+        url: "https://www.youtube.com/embed/NjWTSpMt18c"
     }
 ];
