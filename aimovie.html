@@ -71,7 +71,7 @@ header {
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
-            color: var(--primary-color);
+            color: var(--blue-color);
             margin-right: 2rem;
         }
 
@@ -239,9 +239,11 @@ iframe {
 </div>
 <script src="movies.js"></script>
 <script>
-function signOut() {
+        function signOut() {
             window.location.href = 'index.html';
         }
+</script>
+<script>
 function findMovie(query) {
     query = query.toLowerCase();
     return aiMovieDatabase.find(movie => movie.title.toLowerCase().includes(query));
