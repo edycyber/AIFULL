@@ -12,9 +12,6 @@
     --accent: #7c3aed;
     --text: #ffffff;
     --text-secondary: #a0a0a0;
-    --primary-color: #02b39b; /* Added */
-    --secondary-color: #333; /* Added */
-    --bg-color: white;      /* Added */
 }
 
 * {
@@ -39,38 +36,52 @@ header {
             z-index: 1000;
         }
 
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: var(--primary-color);
+        }
+
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
             color: var(--secondary-color);
             margin-right: 2rem;
         }
+        .sign-out {
+            background-color: var(--secondary-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
-    .sign-out {
-    background-color: var(--secondary-color);
-    color: var(--text); /* Fixed color */
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.sign-out:hover {
-    background-color: var(--primary-color); /* Use the defined primary color */
-}
-
-nav a {
-    color: var(--text); /* Corrected color */
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-nav a:hover {
-    background-color: var(--primary-color); /* Use the defined primary color */
-}
+        .sign-out:hover {
+            background-color: #02b39b;
+        }
 
 .container {
     display: flex;
