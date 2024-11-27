@@ -28,6 +28,62 @@ body {
     overflow: hidden;
 }
 
+header {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: var(--primary-color);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-right: 2rem;
+        }
+
+        .sign-out {
+            background-color: var(--secondary-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .sign-out:hover {
+            background-color: #02b39b;
+        }
+
 .container {
     display: flex;
     height: 100vh;
@@ -147,62 +203,6 @@ iframe {
         height: 50vh;
     }
 }
-
-header {
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 1rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        nav ul {
-            list-style-type: none;
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            margin: 0;
-            padding: 0;
-        }
-
-        nav a {
-            color: var(--text-color);
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-
-        nav a:hover {
-            background-color: var(--primary-color);
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--blue-color);
-            margin-right: 2rem;
-        }
-
-        .sign-out {
-            background-color: var(--secondary-color);
-            color: var(--bg-color);
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .sign-out:hover {
-            background-color: #02b39b;
-        }
 </style>
 </head>
 <body>
