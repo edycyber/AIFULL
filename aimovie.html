@@ -210,7 +210,7 @@ iframe {
         <nav>
             <ul>
                 <li class="logo">Sparrow AI</li>
-                <li><a href="#home">Home</a></li>
+                <li><a href="home.html">Home</a></li>
                 <li><a href="aboutus.html">About Us</a></li>
                 <li><a href="profile.html">Profile</a></li>
             </ul>
@@ -239,6 +239,9 @@ iframe {
 </div>
 <script src="movies.js"></script>
 <script>
+function signOut() {
+            window.location.href = 'index.html';
+        }
 function findMovie(query) {
     query = query.toLowerCase();
     return aiMovieDatabase.find(movie => movie.title.toLowerCase().includes(query));
