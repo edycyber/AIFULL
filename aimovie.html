@@ -254,13 +254,10 @@ function sendMessage() {
     const message = input.value.trim();
     
     if (message) {
-        // Add user message
         addMessage(message, 'user');
         
-        // Find movie
         const movie = findMovie(message);
         
-        // Bot response
         setTimeout(() => {
             if (movie) {
                 currentMovie = movie;
@@ -309,7 +306,6 @@ function playMovie() {
     }
 }
 
-// Handle enter key in input
 document.getElementById('userInput').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
         sendMessage();
