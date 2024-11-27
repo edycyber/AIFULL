@@ -214,7 +214,7 @@ header {
                 <li><a href="aboutus.html">About Us</a></li>
                 <li><a href="profile.html">Profile</a></li>
             </ul>
-            <button class="sign-out" onclick="signOut()">Sign Out</button>
+            <button class="sign-out" onclick="window.location.href='index.html'">Sign Out</button>
         </nav>
     </header>
 <div class="container">
@@ -238,11 +238,6 @@ header {
     </div>
 </div>
 <script src="movies.js"></script>
-<script>
-        function signOut() {
-            window.location.href = 'index.html';
-        }
-</script>
 <script>
 function findMovie(query) {
     query = query.toLowerCase();
