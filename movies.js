@@ -543,5 +543,215 @@ const aiMovieDatabase = [
         title: "Identity",
         description: "Identity",
         url: "https://www.youtube.com/embed/NjWTSpMt18c"
-    }
+    },
+	{
+        title: "Fear in the universe",
+        description: "Fear in the universe",
+        url: "https://www.youtube.com/embed/RTm-DqRVnHM" 
+    },
+	{
+        title: "AI",
+        description: "AI",
+        url: "https://www.youtube.com/embed/TvVMSxgjmJk"  
+    },
+	{
+        title: "Universe",
+        description: "Universe",
+        url: "https://www.youtube.com/embed/Lf4ZO7MahkU" 
+    },
+	{
+        title: "dragons and princesses",
+        description: "dragons and princesses",
+        url: "https://www.youtube.com/embed/zn4u0xsvtFM"  
+    },
+	{
+        title: "ufc",
+        description: "ufc",
+        url: "https://www.youtube.com/embed/hgiTjO_OO_w"   
+    },
+	{
+        title: "Christmas Pixar",
+        description: "Christmas Pixar",
+        url: "https://www.youtube.com/embed/5bDVv2wrBkg"   
+    },
+	{
+        title: "what is AI",
+        description: "what is AI",
+        url: "https://www.youtube.com/embed/AkyLZkCopWQ"    
+    },
+	{
+        title: "space force",
+        description: "space force",
+        url: "https://www.youtube.com/embed/a6eP5vdRkq8"    
+    },
+	{
+        title: "THE LEGEND OF ZELDA 2",
+        description: "THE LEGEND OF ZELDA 2",
+        url: "https://www.youtube.com/embed/WK16T75VzDM"
+    },
+	{
+        title: "I Robot 2",
+        description: "I Robot 2",
+        url: "https://www.youtube.com/embed/2TWUGUn_2h8"
+    },
+	{
+        title: "World of Warcraft",
+        description: "World of Warcraft",
+        url: "https://www.youtube.com/embed/dzOAuNf8cko"
+    },
+	{
+        title: "ARTHAS",
+        description: "ARTHAS",
+        url: "https://www.youtube.com/embed/zMP5GJb50T0"
+    },
+	{
+        title: "SYLVANAS",
+        description: "SYLVANAS",
+        url: "https://www.youtube.com/embed/ljsXl0dCgxY"
+    },
+	{
+        title: "Uncharted Waters IV",
+        description: "Uncharted Waters IV",
+        url: "https://www.youtube.com/embed/dtnWzksq1t4"
+    },
+	{
+        title: "DUNE II",
+        description: "DUNE II",
+        url: "https://www.youtube.com/embed/Zo6_QpcyO0g"
+    },
+	{
+        title: "MALEFICENT 3",
+        description: "MALEFICENT 3",
+        url: "https://www.youtube.com/embed/F7v0XOMlk1w"
+    },
+	{
+        title: "RIDDICK 4",
+        description: "RIDDICK 4",
+        url: "https://www.youtube.com/embed/DQXk3yBHUwE"
+    },
+	{
+        title: "Van Helsing",
+        description: "Van Helsing",
+        url: "https://www.youtube.com/embed/ryzEXkKiKkQ"
+    },
+	{
+        title: "The Twilight",
+        description: "The Twilight",
+        url: "https://www.youtube.com/embed/jltmHqorMcA"
+    },
+	{
+        title: "CASTLEVANIA",
+        description: "CASTLEVANIA",
+        url: "https://www.youtube.com/embed/f_ixGZVWD_Q"
+    },
+	{
+        title: "THOR",
+        description: "THOR ",
+        url: "https://www.youtube.com/embed/X4f_qiK6qX4"
+    },
+	{
+        title: "CONSTANTINE",
+        description: "CONSTANTINE ",
+        url: "https://www.youtube.com/embed/nMdzHQT35Uk"
+    },
+	{
+        title: "MUFASA",
+        description: "MUFASA",
+        url: "https://www.youtube.com/embed/aDWlnZ3kMV0"
+    },
+	{
+        title: "Moana",
+        description: "Moana",
+        url: "https://www.youtube.com/embed/ytwGfkGIWrU"
+    },
+	{
+        title: "Street Fighter The movie",
+        description: "Street Fighter The movie",
+        url: "https://www.youtube.com/embed/QLoR5yaUMLA"
+    },
+	{
+        title: "The Perfumer",
+        description: "The Perfumer ",
+        url: "https://www.youtube.com/embed/TuMxVxYXXfY"
+    },
+	{
+        title: "Crash-Landing",
+        description: "Crash-Landing",
+        url: "https://www.youtube.com/embed/yT7lXbggJbs"
+    },
+	{
+        title: "New Horizon: Exploring the Unseen Cosmos",
+        description: "New Horizon: Exploring the Unseen Cosmos",
+        url: "https://www.youtube.com/embed/DWRk2A7l_o4"
+    },
+	{
+        title: "Shadowhunters",
+        description: "Shadowhunters",
+        url: "https://www.youtube.com/embed/R3nUSr1QSK8"
+    },
+	{
+        title: "A Place in Hell",
+        description: "A Place in Hell",
+        url: "https://www.youtube.com/embed/VIwvS_HbGvs"
+    },
+	{
+        title: "The Last Odyssey",
+        description: "The Last Odyssey",
+        url: "https://www.youtube.com/embed/WFs7u7LefTY"
+    },
+	{
+        title: "The Last Voyager",
+        description: "The Last Voyager",
+        url: "https://www.youtube.com/embed/1TsrxtXABIg"
+    },
+	{
+        title: "Beyond the Abyss",
+        description: "Beyond the Abyss",
+        url: "https://www.youtube.com/embed/0xFAfxrS0Iw"
+    },
+	{
+        title: "The Tallest Tower",
+        description: "The Tallest Tower",
+        url: "https://www.youtube.com/embed/bYgzLjA1K3M"
+    },
+	{
+        title: "Planet 9",
+        description: "Planet 9",
+        url: "https://www.youtube.com/embed/vYfEZO-RX8s"
+    },
+	{
+        title: "Planet X",
+        description: "Planet X",
+        url: "https://www.youtube.com/embed/vYfEZO-RX8s"
+    },
+	{
+        title: "Hiking changes you",
+        description: "Hiking changes you",
+        url: "https://www.youtube.com/embed/pJJChycsjZs"
+    },
+	{
+        title: "Second Dawn",
+        description: "Second Dawn",
+        url: "https://www.youtube.com/embed/md1QdY5BVa0"
+    },
+	{
+        title: "The Last Artist",
+        description: "The Last Artist",
+        url: "https://www.youtube.com/embed/o9Lngj3K9Iw"
+    },
+	{
+        title: "Midnight Debt",
+        description: "Midnight Debt ",
+        url: "https://www.youtube.com/embed/PUnUfV3uXM0"
+    },
+	{
+        title: "Land of the Lost",
+        description: "Land of the Lost",
+        url: "https://www.youtube.com/embed/Hii0NPFzpKY"
+    },
+	{
+        title: "Flamingo Protocol",
+        description: "Flamingo Protocol",
+        url: "https://www.youtube.com/embed/Jq7o9vLPvPQ"
+    }	
 ];
