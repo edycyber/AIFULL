@@ -173,5 +173,40 @@ const aiMovieDatabase = [
         title: "metal music",
         description: "Deep dive into machine learning technologies",
         url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/metal%20music.mp4?t=2024-12-03T14%3A40%3A23.031Z"
+      },
+     {
+        title: "beautiful girl",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/beautiful%20girl.mp4?t=2024-12-03T15%3A02%3A15.139Z"
+      },
+  {
+        title: "frozen dubai",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/frozen%20dubai.mp4?t=2024-12-03T15%3A02%3A47.472Z"
+      },
+    {
+        title: "astronaut playing guitar",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/astronaut%20playing%20guitar.mp4?t=2024-12-03T15%3A03%3A08.891Z"
+      },
+    {
+        title: "comic",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/comic.mp4?t=2024-12-03T15%3A03%3A36.724Z"
+      },
+  {
+        title: "Happy New Year",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/Happy%20New%20Year.mp4?t=2024-12-03T15%3A04%3A09.153Z"
+      },
+  {
+        title: "tiger",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/tiger.mp4?t=2024-12-03T15%3A04%3A34.014Z"
+      },
+    {
+        title: "timelapse",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/timelapse.mp4?t=2024-12-03T15%3A04%3A58.946Z"
       }
 ];
