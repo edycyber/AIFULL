@@ -73,6 +73,26 @@ const aiMovieDatabase = [
         title: "dancing girl",
         description: "Deep dive into machine learning technologies",
         url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/dancing%20girl.mp4?t=2024-12-03T13%3A39%3A29.307Z"
+      },
+    {
+        title: "coffee",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/Coffee.mp4?t=2024-12-03T13%3A59%3A54.364Z"
+      },
+  {
+        title: "cockfight",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/cockfight.mp4?t=2024-12-03T14%3A00%3A23.845Z"
+      },
+  {
+        title: "top gun",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/top%20gun.mp4?t=2024-12-03T14%3A00%3A45.157Z"
+      },
+    {
+        title: "racing",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/racing.mp4?t=2024-12-03T14%3A01%3A11.108Z"
       }
   
 ];
