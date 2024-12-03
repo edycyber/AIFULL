@@ -93,6 +93,45 @@ const aiMovieDatabase = [
         title: "racing",
         description: "Deep dive into machine learning technologies",
         url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/racing.mp4?t=2024-12-03T14%3A01%3A11.108Z"
+      },
+  {
+        title: "Christmas Pixar",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/Christmas%20Pixar.mp4?t=2024-12-03T14%3A25%3A24.298Z"
+      },
+  {
+        title: "ghost",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/ghost.mp4?t=2024-12-03T14%3A25%3A49.614Z"
+      },
+  {
+        title: "zombie",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/zombie.mp4?t=2024-12-03T14%3A26%3A22.637Z"
+      },
+    {
+        title: "dragons and princesses",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/dragons%20and%20princesses.mp4?t=2024-12-03T14%3A26%3A45.017Z"
+      },
+    {
+        title: "train",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/train.mp4?t=2024-12-03T14%3A27%3A09.897Z"
+      },
+  {
+        title: "suit",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/suit.mp4?t=2024-12-03T14%3A27%3A32.801Z"
+      },
+  {
+        title: "black people",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/black%20people.mp4?t=2024-12-03T14%3A27%3A56.602Z"
+      },
+    {
+        title: "atomic bomb",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/atomic%20bomb.mp4?t=2024-12-03T14%3A28%3A16.394Z"
       }
-  
 ];
