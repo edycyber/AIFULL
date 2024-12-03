@@ -133,5 +133,45 @@ const aiMovieDatabase = [
         title: "atomic bomb",
         description: "Deep dive into machine learning technologies",
         url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/atomic%20bomb.mp4?t=2024-12-03T14%3A28%3A16.394Z"
+      },
+    {
+        title: "art",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/art.mp4?t=2024-12-03T14%3A37%3A42.874Z"
+      },
+  {
+        title: "destiny",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/destiny.mp4?t=2024-12-03T14%3A38%3A05.281Z"
+      },
+  {
+        title: "UFO",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/UFO.mp4?t=2024-12-03T14%3A38%3A40.479Z"
+      },
+    {
+        title: "Harley Quinn and Catwoman",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/Harley%20Quinn%20and%20Catwoman.mp4?t=2024-12-03T14%3A39%3A02.484Z"
+      },
+    {
+        title: "rick & morty",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/rick%20&%20morty.mp4?t=2024-12-03T14%3A39%3A26.869Z"
+      },
+  {
+        title: "Stalin",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/Stalin.mp4?t=2024-12-03T14%3A39%3A46.286Z"
+      },
+  {
+        title: "Snow Bear",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/Snow%20Bear.mp4?t=2024-12-03T14%3A40%3A02.365Z"
+      },
+    {
+        title: "metal music",
+        description: "Deep dive into machine learning technologies",
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/metal%20music.mp4?t=2024-12-03T14%3A40%3A23.031Z"
       }
 ];
