@@ -1,4 +1,4 @@
-<html><head><base href="https://websim.io/stadium-concert/%20add%20a%20screen%20on%20the%20stage%20(the%20screen%20must%20have%20the%20same%20length%20as%20the%20stage)%20where%20this%20video%20can%20be%20seen%20https://youtu.be/fGKAJrbiMJI?si=n2cNo0IO3pmeK7rf,%20add%20colors%20lights%20as%20special%20effects,%20Add%20a%20button%20where%20a%20marketplace%20is%20displayed%20so%20that%20users%20can%20purchase%20products%20and%20applications,%20Add%20a%20button%20where%20a%20marketplace%20of%20event%20sponsors%20is%20displayed,%20Add%20a%20button%20where%20users%20can%20chat%20using%20discord,%20allow%20the%20user%20to%20move%20and%20use%20the%20n%20key%20so%20that%20the%20user%20stops"><title>Interactive Stadium Concert Experience</title>
+<html><head><title>Interactive Stadium Concert Experience</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@widgetbot/crate@3"></script>
@@ -229,65 +229,54 @@ let vertex = new THREE.Vector3();
 let color = new THREE.Color();
 let currentVideo = 'https://www.youtube.com/embed/fGKAJrbiMJI?si=n2cNo0IO3pmeK7rf&autoplay=1&mute=1&loop=1&playlist=fGKAJrbiMJI';
 
-// AI Chatbot functionality
-async function getAIResponse(userInput) {
-  try {
-    const response = await fetch('/api/ai_completion', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: JSON.stringify({
-        prompt: `Based on the user's movie request "${userInput}", find a matching movie from the available options in the database. Respond conversationally and suggest a movie.
-        
-        <typescript-interface>
-        interface Response {
-          message: string;
-          movieTitle?: string;
-        }
-        </typescript-interface>
-        
-        <example>
-        {
-          "message": "I think you'd enjoy Ex Machina! It's a fascinating exploration of artificial intelligence. Would you like me to play it?",
-          "movieTitle": "Ex Machina"
-        }
-        </example>`,
-        data: userInput
-      }),
-    });
-    return await response.json();
-  } catch (error) {
-    console.error('Error getting AI response:', error);
-    return {
-      message: "I apologize, but I'm having trouble processing your request right now.",
-      movieTitle: null
-    };
+  //chatbot
+const chatMessages = document.getElementById('chat-messages');
+  const userInput = document.getElementById('user-input');
+  const sendBtn = document.getElementById('send-btn');
+  const iframe = document.getElementById('movie-iframe');
+  const moviePlayContainer = document.getElementById('movie-play-container');
+  const playMovieBtn = document.getElementById('play-movie-btn');
+  const movieTitleElement = document.getElementById('movie-title');
+
+  let currentMovieUrl = "";
+
+  function addChatMessage(message, isBot = false) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `chat-message ${isBot ? 'bot-message' : 'user-message'}`;
+    messageDiv.textContent = message;
+    chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
   }
-}
 
-function updateChatMessages(message, isBot = false) {
-  const chatMessages = document.getElementById('chat-messages');
-  const messageDiv = document.createElement('div');
-  messageDiv.className = `chat-message ${isBot ? 'bot-message' : 'user-message'}`;
-  messageDiv.textContent = message;
-  chatMessages.appendChild(messageDiv);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
+  sendBtn.addEventListener('click', () => {
+    const userMessage = userInput.value.trim();
+    if (!userMessage) return;
 
-function updateScreenContent(videoUrl) {
-  const videoContainer = document.getElementById('video-container');
-  videoContainer.innerHTML = `<iframe width="560" height="315" src="${videoUrl}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
-}
+    addChatMessage(userMessage);
+    userInput.value = '';
 
-function init() {
-  scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  renderer = new THREE.WebGLRenderer();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.getElementById('scene-container').appendChild(renderer.domElement);
+    if (typeof getMovieUrl === 'function') {
+      const movieUrl = getMovieUrl(userMessage);
+      if (movieUrl) {
+        addChatMessage("Yes, I have it. Enjoy it!", true);
+        currentMovieUrl = movieUrl;
+        movieTitleElement.textContent = userMessage;
+        moviePlayContainer.style.display = "flex";
+      } else {
+        addChatMessage("I'm sorry, I don't have that movie. Try another one!", true);
+      }
+    } else {
+      addChatMessage("Error: Movie database not loaded.", true);
+    }
+  });
 
+  playMovieBtn.addEventListener('click', () => {
+    if (currentMovieUrl) {
+      iframe.src = currentMovieUrl;
+      moviePlayContainer.style.display = "none";
+    }
+  });
+  
   // Lighting
   const ambientLight = new THREE.AmbientLight(0x404040);
   scene.add(ambientLight);
