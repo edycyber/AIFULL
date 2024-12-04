@@ -1,4 +1,4 @@
-<html><head><base href="/">
+<html><head>
 <style>
   body {
     margin: 0;
@@ -305,12 +305,12 @@
 <script>
 let autoRotate = false;
 let rotationAngle = 0;
-let movieDatabase = []; // Will be populated from movies.js
+let aiMovieDatabase = []; // Will be populated from movies.js
 
 // Wait for movies.js to load
 window.onload = function() {
   if (typeof movies !== 'undefined') {
-    movieDatabase = movies;
+    aiMovieDatabase = movies;
   }
 }
 
@@ -354,8 +354,8 @@ function searchVideo() {
   }
 
   // Search in movie database
-  if (movieDatabase.length > 0) {
-    const foundMovie = movieDatabase.find(movie => 
+  if (aiMovieDatabase.length > 0) {
+    const foundMovie = aiMovieDatabase.find(movie => 
       movie.title.toLowerCase().includes(query) || 
       movie.description.toLowerCase().includes(query)
     );
