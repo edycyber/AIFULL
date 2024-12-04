@@ -1,4 +1,5 @@
-<html><head>
+<html><head><base href="/">
+<script src="movies.js"></script>
 <style>
   body {
     margin: 0;
@@ -297,7 +298,7 @@
 <div class="controls">
   <div class="chat-history" id="chatHistory"></div>
   <div class="chat-input">
-    <input type="text" id="searchInput" placeholder="Search the AI Movies..." onkeypress="handleKeyPress(event)">
+    <input type="text" id="searchInput" placeholder="Search for a YouTube video..." onkeypress="handleKeyPress(event)">
     <button onclick="searchVideo()">Search</button>
   </div>
 </div>
@@ -305,6 +306,14 @@
 <script>
 let autoRotate = false;
 let rotationAngle = 0;
+let movieDatabase = []; // Will be populated from movies.js
+
+// Wait for movies.js to load
+window.onload = function() {
+  if (typeof movies !== 'undefined') {
+    movieDatabase = movies;
+  }
+}
 
 function addMessage(text, isUser = false) {
   const chatHistory = document.getElementById('chatHistory');
@@ -329,21 +338,54 @@ function extractVideoId(url) {
 
 function searchVideo() {
   const input = document.getElementById('searchInput');
-  const query = input.value.trim();
+  const query = input.value.trim().toLowerCase();
   
   if (!query) {
     addMessage('Please enter a search term or YouTube URL');
     return;
   }
 
-  const videoId = extractVideoId(query);
-  const iframe = document.querySelector('iframe');
-  iframe.src = `https://www.youtube.com/embed/${videoId}`;
-  
-  addMessage(query, true);
-  addMessage('Video updated! Enjoy watching ðŸŽ¬');
+  // First check if it's a direct YouTube URL
+  if (query.includes('youtube.com') || query.includes('youtu.be')) {
+    const videoId = extractVideoId(query);
+    updateVideo(videoId);
+    addMessage(query, true);
+    addMessage('Direct YouTube URL detected! Enjoy watching 🎬');
+    return;
+  }
+
+  // Search in movie database
+  if (movieDatabase.length > 0) {
+    const foundMovie = movieDatabase.find(movie => 
+      movie.title.toLowerCase().includes(query) || 
+      movie.description.toLowerCase().includes(query)
+    );
+
+    if (foundMovie && foundMovie.youtubeId) {
+      updateVideo(foundMovie.youtubeId);
+      addMessage(query, true);
+      addMessage(`Found "${foundMovie.title}"! Enjoy watching 🎬`);
+    } else {
+      // If not found in database, use as regular YouTube search term
+      const videoId = query;
+      updateVideo(videoId);
+      addMessage(query, true);
+      addMessage('Video updated! Note: For best results, try using a YouTube URL or search for movies in our database.');
+    }
+  } else {
+    // Fallback if database isn't loaded
+    const videoId = query;
+    updateVideo(videoId);
+    addMessage(query, true);
+    addMessage('Video updated! Note: Movie database not loaded, using direct search.');
+  }
   
   input.value = '';
+}
+
+function updateVideo(videoId) {
+  const iframe = document.querySelector('iframe');
+  iframe.src = `https://www.youtube.com/embed/${videoId}`;
 }
 
 function toggleAutoRotate() {
