@@ -1,572 +1,434 @@
-<html><head><base href="https://websim.io/stadium-concert/%20add%20a%20screen%20on%20the%20stage%20(the%20screen%20must%20have%20the%20same%20length%20as%20the%20stage)%20where%20this%20video%20can%20be%20seen%20https://youtu.be/fGKAJrbiMJI?si=n2cNo0IO3pmeK7rf,%20add%20colors%20lights%20as%20special%20effects,%20Add%20a%20button%20where%20a%20marketplace%20is%20displayed%20so%20that%20users%20can%20purchase%20products%20and%20applications,%20Add%20a%20button%20where%20a%20marketplace%20of%20event%20sponsors%20is%20displayed,%20Add%20a%20button%20where%20users%20can%20chat%20using%20discord,%20allow%20the%20user%20to%20move%20and%20use%20the%20n%20key%20so%20that%20the%20user%20stops"><title>Interactive Stadium Concert Experience</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@widgetbot/crate@3"></script>
-<script src="movies.js"></script>
+<html><head>
 <style>
-  body { margin: 0; overflow: hidden; font-family: Arial, sans-serif; }
-  canvas { display: block; }
-  #video-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: -1;
+  body {
+    margin: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background: #000;
   }
-  .button {
-    position: absolute;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  
+  .stage {
+    perspective: 1000px;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-  .button:hover {
-    background-color: #45a049;
+  
+  .scene {
+    transform-style: preserve-3d;
+    position: relative;
+    transition: transform 0.3s ease;
   }
-  #marketplace-btn { top: 20px; right: 20px; }
-  #sponsors-btn { top: 70px; right: 20px; }
-  #discord-btn { top: 120px; right: 20px; }
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
+  
+  .screen-container {
+    transform-style: preserve-3d;
+    transform: translateZ(0px);
+    width: 90vw;
+    max-width: 800px;
+  }
+  
+  .screen {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border: 20px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(255,255,255,0.1);
+  }
+
+  .screen iframe {
     width: 100%;
     height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
   }
-  .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 600px;
-    border-radius: 10px;
-  }
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  .product, .sponsor {
-    margin-bottom: 15px;
-    padding: 10px;
-    background-color: #f0f0f0;
-    border-radius: 5px;
-  }
-  .product button, .sponsor button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-  #instructions {
+  
+  .spotlights {
     position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: rgba(0,0,0,0.7);
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 14px;
+    width: 100%;
+    height: 100%;
   }
-  #chatbot-container {
-    position: fixed;
+  
+  .spotlight {
+    position: absolute;
+    width: 20px;
+    height: 100px;
+    background: #444;
+    transform-style: preserve-3d;
+  }
+  
+  .light-beam {
+    position: absolute;
+    width: 100px;
+    height: 200px;
+    background: radial-gradient(ellipse at top, rgba(255,255,255,0.2), transparent 70%);
+    transform-origin: top;
+    animation: flicker 2s infinite alternate;
+  }
+
+  .laser {
+    position: absolute;
+    width: 2px;
+    height: 100vh;
+    background: linear-gradient(to bottom, 
+      rgba(255,0,0,0.5), 
+      rgba(255,0,0,0) 80%);
+    animation: laserMove 4s infinite alternate;
+  }
+
+  .crowd {
+    position: absolute;
+    bottom: -50vh;
     left: 0;
-    bottom: 0;
-    width: 300px;
-    height: 400px;
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
+    width: 100%;
+    height: 50vh;
+    transform: rotateX(60deg);
+    transform-style: preserve-3d;
+  }
+
+  .crowd-dot {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+    animation: crowdWave 2s infinite alternate;
+  }
+
+  .side-light {
+    position: absolute;
+    width: 10px;
+    height: 200px;
+    background: #333;
+    transform-style: preserve-3d;
+  }
+
+  .side-light-beam {
+    position: absolute;
+    width: 50px;
+    height: 300px;
+    background: radial-gradient(ellipse at top, rgba(255,255,0,0.2), transparent 70%);
+    transform-origin: top;
+    animation: flicker 3s infinite alternate;
+  }
+  
+  @keyframes rotate {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+  }
+  
+  @keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  @keyframes laserMove {
+    0% { transform: rotateZ(-45deg) translateX(-100%); }
+    100% { transform: rotateZ(45deg) translateX(100%); }
+  }
+
+  @keyframes crowdWave {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+  }
+  
+  .controls {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1000;
+    background: rgba(0,0,0,0.7);
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
   }
-  #chat-messages {
-    flex-grow: 1;
-    overflow-y: auto;
-    margin-bottom: 10px;
+  
+  .view-controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: rgba(0,0,0,0.7);
     padding: 10px;
-  }
-  #chat-input {
+    border-radius: 10px;
     display: flex;
     gap: 10px;
   }
-  #user-input {
-    flex-grow: 1;
-    padding: 8px;
-    border-radius: 4px;
-    border: none;
+
+  .chat-input {
+    display: flex;
+    gap: 10px;
+    width: 100%;
   }
-  #send-btn {
-    padding: 8px 15px;
-    background: #4CAF50;
+
+  input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #333;
+    color: white;
+  }
+
+  button {
+    background: #444;
     color: white;
     border: none;
-    border-radius: 4px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  button:hover {
+    background: #666;
+  }
+
+  .chat-history {
+    max-height: 100px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    color: white;
+  }
+
+  .message {
+    padding: 5px;
+    margin: 5px 0;
+    border-radius: 5px;
+    background: rgba(255,255,255,0.1);
+  }
+
+  .zoom-controls {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    background: rgba(0,0,0,0.7);
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .zoom-slider {
+    writing-mode: bt-lr;
+    -webkit-appearance: slider-vertical;
+    width: 8px;
+    height: 150px;
+    background: #444;
+  }
+
+  .zoom-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #666;
+    border-radius: 50%;
     cursor: pointer;
   }
-  .chat-message {
-    margin-bottom: 10px;
-    padding: 8px;
-    border-radius: 4px;
+
+  .zoom-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #666;
+    border-radius: 50%;
+    cursor: pointer;
   }
-  .bot-message {
-    background: #4CAF50;
-  }
-  .user-message {
-    background: #2196F3;
-    text-align: right;
+
+  @media (max-width: 768px) {
+    .screen-container {
+      width: 95vw;
+    }
+    
+    .screen {
+      border-width: 10px;
+    }
+    
+    .controls {
+      padding: 10px;
+    }
   }
 </style>
 </head>
 <body>
-<div id="scene-container"></div>
-<div id="video-container">
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/fGKAJrbiMJI?si=n2cNo0IO3pmeK7rf&autoplay=1&mute=1&loop=1&playlist=fGKAJrbiMJI" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-</div>
-<button id="marketplace-btn" class="button">Marketplace</button>
-<button id="sponsors-btn" class="button">Sponsors</button>
-<button id="discord-btn" class="button">Chat on Discord</button>
 
-<div id="instructions">
-  Use WASD to move, mouse to look around<br>
-  Press 'N' to stop moving<br>
-  Press 'F' for fireworks, 'L' for light show
-</div>
-
-<div id="marketplace-modal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>Concert Marketplace</h2>
-    <div class="product">
-      <h3>VIP Backstage Pass</h3>
-      <p>Get exclusive access to meet the artists!</p>
-      <button onclick="purchase('VIP Backstage Pass')">Buy for $199</button>
+<div class="stage">
+  <div class="scene">
+    <div class="screen-container">
+      <div class="screen">
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
     </div>
-    <div class="product">
-      <h3>Limited Edition T-Shirt</h3>
-      <p>Commemorate this epic concert with our exclusive design.</p>
-      <button onclick="purchase('Limited Edition T-Shirt')">Buy for $29.99</button>
+    <div class="spotlights">
+      <div class="spotlight" style="left: -200px; transform: translateZ(100px)">
+        <div class="light-beam"></div>
+      </div>
+      <div class="spotlight" style="right: -200px; transform: translateZ(100px)">
+        <div class="light-beam"></div>
+      </div>
     </div>
-    <div class="product">
-      <h3>Digital Album Download</h3>
-      <p>Get the studio version of tonight's setlist.</p>
-      <button onclick="purchase('Digital Album Download')">Buy for $9.99</button>
+    <div class="side-light" style="left: -300px; top: -100px; transform: translateZ(0px)">
+      <div class="side-light-beam"></div>
     </div>
-    <div class="product">
-      <h3>AR Concert Experience App</h3>
-      <p>Enhance your live experience with our augmented reality app.</p>
-      <button onclick="purchase('AR Concert Experience App')">Buy for $4.99</button>
+    <div class="side-light" style="right: -300px; top: -100px; transform: translateZ(0px)">
+      <div class="side-light-beam"></div>
     </div>
+    <div class="laser" style="left: 25%"></div>
+    <div class="laser" style="left: 75%"></div>
+    <div class="crowd" id="crowd"></div>
   </div>
 </div>
 
-<div id="sponsors-modal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>Event Sponsors</h2>
-    <div class="sponsor">
-      <h3>MegaSounds Audio Systems</h3>
-      <p>Bringing you crystal clear audio tonight!</p>
-      <button onclick="visitSponsor('MegaSounds')">Visit Website</button>
-    </div>
-    <div class="sponsor">
-      <h3>LightFX Productions</h3>
-      <p>Creating an unforgettable visual experience.</p>
-      <button onclick="visitSponsor('LightFX')">Visit Website</button>
-    </div>
-    <div class="sponsor">
-      <h3>ConcertGear Apparel</h3>
-      <p>Official merchandise provider for tonight's show.</p>
-      <button onclick="visitSponsor('ConcertGear')">Shop Now</button>
-    </div>
-    <div class="sponsor">
-      <h3>StageView Streaming</h3>
-      <p>Can't be here? Watch the live stream!</p>
-      <button onclick="visitSponsor('StageView')">Start Streaming</button>
-    </div>
-  </div>
+<div class="zoom-controls">
+  <button onclick="resetZoom()">Reset Zoom</button>
+  <input type="range" class="zoom-slider" min="500" max="2000" value="1000" orient="vertical" 
+         oninput="updateZoom(this.value)">
 </div>
 
-<div id="chatbot-container">
-  <div id="chat-messages"></div>
-  <div id="chat-input">
-    <input type="text" id="user-input" placeholder="Type your movie request...">
-    <button id="send-btn">Send</button>
+<div class="view-controls">
+  <button onclick="toggleAutoRotate()">Toggle Auto-Rotate</button>
+  <button onclick="resetView()">Reset View</button>
+</div>
+
+<div class="controls">
+  <div class="chat-history" id="chatHistory"></div>
+  <div class="chat-input">
+    <input type="text" id="searchInput" placeholder="Search the AI Movies..." onkeypress="handleKeyPress(event)">
+    <button onclick="searchVideo()">Search</button>
   </div>
 </div>
 
 <script>
-let scene, camera, renderer, stadium, stage, screen, crowd, fireworks, colorLights;
-let moveForward = false;
-let moveBackward = false;
-let moveLeft = false;
-let moveRight = false;
-let canJump = false;
-let prevTime = performance.now();
-let velocity = new THREE.Vector3();
-let direction = new THREE.Vector3();
-let vertex = new THREE.Vector3();
-let color = new THREE.Color();
-let currentVideo = 'https://www.youtube.com/embed/fGKAJrbiMJI?si=n2cNo0IO3pmeK7rf&autoplay=1&mute=1&loop=1&playlist=fGKAJrbiMJI';
+let autoRotate = false;
+let rotationAngle = 0;
 
-// AI Chatbot functionality
-async function getAIResponse(userInput) {
-  try {
-    const response = await fetch('/api/ai_completion', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: JSON.stringify({
-        prompt: `Based on the user's movie request "${userInput}", find a matching movie from the available options in the database. Respond conversationally and suggest a movie.
-        
-        <typescript-interface>
-        interface Response {
-          message: string;
-          movieTitle?: string;
-        }
-        </typescript-interface>
-        
-        <example>
-        {
-          "message": "I think you'd enjoy Ex Machina! It's a fascinating exploration of artificial intelligence. Would you like me to play it?",
-          "movieTitle": "Ex Machina"
-        }
-        </example>`,
-        data: userInput
-      }),
-    });
-    return await response.json();
-  } catch (error) {
-    console.error('Error getting AI response:', error);
-    return {
-      message: "I apologize, but I'm having trouble processing your request right now.",
-      movieTitle: null
-    };
+function addMessage(text, isUser = false) {
+  const chatHistory = document.getElementById('chatHistory');
+  const message = document.createElement('div');
+  message.className = 'message';
+  message.textContent = isUser ? `You: ${text}` : `Bot: ${text}`;
+  chatHistory.appendChild(message);
+  chatHistory.scrollTop = chatHistory.scrollHeight;
+}
+
+function handleKeyPress(event) {
+  if (event.key === 'Enter') {
+    searchVideo();
   }
 }
 
-function updateChatMessages(message, isBot = false) {
-  const chatMessages = document.getElementById('chat-messages');
-  const messageDiv = document.createElement('div');
-  messageDiv.className = `chat-message ${isBot ? 'bot-message' : 'user-message'}`;
-  messageDiv.textContent = message;
-  chatMessages.appendChild(messageDiv);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
+function extractVideoId(url) {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : url;
 }
 
-function updateScreenContent(videoUrl) {
-  const videoContainer = document.getElementById('video-container');
-  videoContainer.innerHTML = `<iframe width="560" height="315" src="${videoUrl}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
-}
-
-function init() {
-  scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  renderer = new THREE.WebGLRenderer();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.getElementById('scene-container').appendChild(renderer.domElement);
-
-  // Lighting
-  const ambientLight = new THREE.AmbientLight(0x404040);
-  scene.add(ambientLight);
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-  directionalLight.position.set(0, 1, 0);
-  scene.add(directionalLight);
-
-  // Stadium
-  const stadiumGeometry = new THREE.CylinderGeometry(50, 50, 30, 32, 1, true);
-  const stadiumMaterial = new THREE.MeshPhongMaterial({color: 0x999999, side: THREE.DoubleSide});
-  stadium = new THREE.Mesh(stadiumGeometry, stadiumMaterial);
-  scene.add(stadium);
-
-  // Stage
-  const stageGeometry = new THREE.BoxGeometry(20, 2, 10);
-  const stageMaterial = new THREE.MeshPhongMaterial({color: 0x333333});
-  stage = new THREE.Mesh(stageGeometry, stageMaterial);
-  stage.position.set(0, -14, 0);
-  scene.add(stage);
-
-  // Screen
-  const screenGeometry = new THREE.PlaneGeometry(20, 10);
-  const screenMaterial = new THREE.MeshBasicMaterial({color: 0xffffff});
-  screen = new THREE.Mesh(screenGeometry, screenMaterial);
-  screen.position.set(0, -9, -4.9);
-  scene.add(screen);
-
-  // Crowd (particle system)
-  const crowdGeometry = new THREE.BufferGeometry();
-  const crowdMaterial = new THREE.PointsMaterial({color: 0xffffff, size: 0.1});
-  const crowdPositions = [];
-  for (let i = 0; i < 10000; i++) {
-    const theta = THREE.MathUtils.randFloatSpread(Math.PI * 2);
-    const radius = 30 + Math.random() * 15;
-    crowdPositions.push(
-      Math.cos(theta) * radius,
-      THREE.MathUtils.randFloatSpread(10) - 10,
-      Math.sin(theta) * radius
-    );
-  }
-  crowdGeometry.setAttribute('position', new THREE.Float32BufferAttribute(crowdPositions, 3));
-  crowd = new THREE.Points(crowdGeometry, crowdMaterial);
-  scene.add(crowd);
-
-  // Fireworks
-  fireworks = new THREE.Group();
-  scene.add(fireworks);
-
-  // Color Lights
-  colorLights = new THREE.Group();
-  const colors = [0xff0000, 0x00ff00, 0x0000ff, 0xffff00, 0xff00ff, 0x00ffff];
-  for (let i = 0; i < 6; i++) {
-    const light = new THREE.PointLight(colors[i], 1, 50);
-    light.position.set(
-      THREE.MathUtils.randFloatSpread(30),
-      10,
-      THREE.MathUtils.randFloatSpread(20)
-    );
-    colorLights.add(light);
-  }
-  scene.add(colorLights);
-
-  camera.position.set(0, 0, 30);
-
-  // Controls
-  const onKeyDown = function (event) {
-    switch (event.code) {
-      case 'ArrowUp':
-      case 'KeyW':
-        moveForward = true;
-        break;
-      case 'ArrowLeft':
-      case 'KeyA':
-        moveLeft = true;
-        break;
-      case 'ArrowDown':
-      case 'KeyS':
-        moveBackward = true;
-        break;
-      case 'ArrowRight':
-      case 'KeyD':
-        moveRight = true;
-        break;
-      case 'KeyN':
-        stopMoving();
-        break;
-      case 'KeyF':
-        createFirework();
-        break;
-      case 'KeyL':
-        toggleLightShow();
-        break;
-    }
-  };
-
-  const onKeyUp = function (event) {
-    switch (event.code) {
-      case 'ArrowUp':
-      case 'KeyW':
-        moveForward = false;
-        break;
-      case 'ArrowLeft':
-      case 'KeyA':
-        moveLeft = false;
-        break;
-      case 'ArrowDown':
-      case 'KeyS':
-        moveBackward = false;
-        break;
-      case 'ArrowRight':
-      case 'KeyD':
-        moveRight = false;
-        break;
-    }
-  };
-
-  document.addEventListener('keydown', onKeyDown);
-  document.addEventListener('keyup', onKeyUp);
-
-  document.addEventListener('mousemove', onMouseMove, false);
-}
-
-function onMouseMove(event) {
-  const movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
-  const movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
-
-  camera.rotation.y -= movementX * 0.002;
-  camera.rotation.x -= movementY * 0.002;
-
-  camera.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, camera.rotation.x));
-}
-
-function stopMoving() {
-  moveForward = false;
-  moveBackward = false;
-  moveLeft = false;
-  moveRight = false;
-  velocity.set(0, 0, 0);
-}
-
-function createFirework() {
-  const geometry = new THREE.BufferGeometry();
-  const material = new THREE.PointsMaterial({
-    color: Math.random() * 0xffffff,
-    size: 0.1,
-    transparent: true,
-    opacity: 1
-  });
-
-  const positions = [];
-  for (let i = 0; i < 500; i++) {
-    positions.push(THREE.MathUtils.randFloatSpread(10));
-    positions.push(THREE.MathUtils.randFloatSpread(10));
-    positions.push(THREE.MathUtils.randFloatSpread(10));
-  }
-  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-
-  const firework = new THREE.Points(geometry, material);
-  firework.position.set(
-    THREE.MathUtils.randFloatSpread(60),
-    20 + Math.random() * 15,
-    THREE.MathUtils.randFloatSpread(30)
-  );
-  fireworks.add(firework);
-
-  setTimeout(() => {
-    fireworks.remove(firework);
-  }, 2000);
-}
-
-let lightShowActive = false;
-
-function toggleLightShow() {
-  lightShowActive = !lightShowActive;
-}
-
-function animate() {
-  requestAnimationFrame(animate);
-
-  const time = performance.now();
-  const delta = (time - prevTime) / 1000;
-
-  velocity.x -= velocity.x * 10.0 * delta;
-  velocity.z -= velocity.z * 10.0 * delta;
-  velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
-
-  direction.z = Number(moveForward) - Number(moveBackward);
-  direction.x = Number(moveRight) - Number(moveLeft);
-  direction.normalize(); // this ensures consistent movements in all directions
-
-  if (moveForward || moveBackward) velocity.z -= direction.z * 400.0 * delta;
-  if (moveLeft || moveRight) velocity.x -= direction.x * 400.0 * delta;
-
-  camera.translateX(velocity.x * delta);
-  camera.translateY(velocity.y * delta);
-  camera.translateZ(velocity.z * delta);
-
-  if (camera.position.y < 10) {
-    velocity.y = 0;
-    camera.position.y = 10;
-    canJump = true;
+function searchVideo() {
+  const input = document.getElementById('searchInput');
+  const query = input.value.trim();
+  
+  if (!query) {
+    addMessage('Please enter a search term or YouTube URL');
+    return;
   }
 
-  crowd.rotation.y += 0.001;
-  if (Math.random() < 0.05) createFirework();
-
-  fireworks.children.forEach(firework => {
-    firework.material.opacity -= 0.01;
-    firework.position.y += 0.1;
-  });
-
-  // Animate color lights
-  if (lightShowActive) {
-    colorLights.children.forEach(light => {
-      light.intensity = 0.5 + Math.sin(Date.now() * 0.005) * 0.5;
-      light.position.y = 10 + Math.sin(Date.now() * 0.003 + light.position.x) * 5;
-    });
-  } else {
-    colorLights.children.forEach(light => {
-      light.intensity = 0.5;
-    });
-  }
-
-  prevTime = time;
-
-  renderer.render(scene, camera);
+  const videoId = extractVideoId(query);
+  const iframe = document.querySelector('iframe');
+  iframe.src = `https://www.youtube.com/embed/${videoId}`;
+  
+  addMessage(query, true);
+  addMessage('Video updated! Enjoy watching ðŸŽ¬');
+  
+  input.value = '';
 }
 
-init();
-animate();
-
-// Modal functionality
-const marketplaceBtn = document.getElementById('marketplace-btn');
-const sponsorsBtn = document.getElementById('sponsors-btn');
-const marketplaceModal = document.getElementById('marketplace-modal');
-const sponsorsModal = document.getElementById('sponsors-modal');
-const closeBtns = document.getElementsByClassName('close');
-
-marketplaceBtn.onclick = () => marketplaceModal.style.display = 'block';
-sponsorsBtn.onclick = () => sponsorsModal.style.display = 'block';
-
-Array.from(closeBtns).forEach(btn => {
-  btn.onclick = function() {
-    marketplaceModal.style.display = 'none';
-    sponsorsModal.style.display = 'none';
+function toggleAutoRotate() {
+  autoRotate = !autoRotate;
+  if (autoRotate) {
+    rotateScene();
   }
+}
+
+function resetView() {
+  const scene = document.querySelector('.scene');
+  scene.style.transform = 'rotateX(0deg) rotateY(0deg)';
+  autoRotate = false;
+}
+
+function rotateScene() {
+  if (!autoRotate) return;
+  
+  const scene = document.querySelector('.scene');
+  rotationAngle += 0.5;
+  scene.style.transform = `rotateY(${rotationAngle}deg)`;
+  requestAnimationFrame(rotateScene);
+}
+
+// Add crowd dots
+const crowd = document.getElementById('crowd');
+for (let i = 0; i < 200; i++) {
+  const dot = document.createElement('div');
+  dot.className = 'crowd-dot';
+  dot.style.left = Math.random() * 100 + '%';
+  dot.style.top = Math.random() * 100 + '%';
+  dot.style.animationDelay = Math.random() * 2 + 's';
+  crowd.appendChild(dot);
+}
+
+// Add zoom control
+function updateZoom(value) {
+  const stage = document.querySelector('.stage');
+  stage.style.perspective = `${value}px`;
+}
+
+function resetZoom() {
+  const stage = document.querySelector('.stage');
+  stage.style.perspective = '1000px';
+  document.querySelector('.zoom-slider').value = 1000;
+}
+
+// Update mouse control to include depth movement
+let isDragging = false;
+let previousMousePosition = { x: 0, y: 0 };
+let currentZPosition = 0;
+
+document.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  previousMousePosition = { x: e.clientX, y: e.clientY };
 });
 
-window.onclick = function(event) {
-  if (event.target == marketplaceModal) marketplaceModal.style.display = 'none';
-  if (event.target == sponsorsModal) sponsorsModal.style.display = 'none';
-}
-
-function purchase(item) {
-  alert(`Thank you for purchasing the ${item}! Your order has been processed.`);
-}
-
-function visitSponsor(sponsor) {
-  alert(`Redirecting to ${sponsor}'s website...`);
-}
-
-// Discord chat integration
-new Crate({
-  server: '299881420891881473',
-  channel: '355719584830980096',
-  location: ['bottom', 'left'],
-  color: '#7289DA',
-  indicator: true
-})
-
-document.getElementById('discord-btn').addEventListener('click', () => {
-  Crate.toggle();
+document.addEventListener('mousemove', (e) => {
+  if (!isDragging || autoRotate) return;
+  
+  const scene = document.querySelector('.scene');
+  const deltaX = e.clientX - previousMousePosition.x;
+  const deltaY = e.clientY - previousMousePosition.y;
+  
+  rotationAngle += deltaX * 0.5;
+  const xRotation = Math.max(-30, Math.min(30, deltaY * 0.5));
+  
+  scene.style.transform = `rotateY(${rotationAngle}deg) rotateX(${xRotation}deg) translateZ(${currentZPosition}px)`;
+  
+  previousMousePosition = { x: e.clientX, y: e.clientY };
 });
 
-window.addEventListener('resize', () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
+document.addEventListener('mouseup', () => {
+  isDragging = false;
 });
+
+// Add mouse wheel control for depth
+document.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  const scene = document.querySelector('.scene');
+  currentZPosition = Math.max(-500, Math.min(500, currentZPosition - e.deltaY));
+  
+  scene.style.transform = `rotateY(${rotationAngle}deg) translateZ(${currentZPosition}px)`;
+}, { passive: false });
+
 </script>
-</body>
-</html>
+
+</body></html>
