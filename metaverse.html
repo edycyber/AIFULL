@@ -41,6 +41,39 @@
     #marketplace-btn { top: 20px; right: 20px; }
     #sponsors-btn { top: 70px; right: 20px; }
     #discord-btn { top: 120px; right: 20px; }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 600px;
+      border-radius: 10px;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
     #chatbot-container {
       position: fixed;
       left: 0;
@@ -111,109 +144,109 @@
   </div>
 </div>
 
-<script>
-  let scene, camera, renderer, stadium, stage, screen, crowd;
+<div id="marketplace-modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Concert Marketplace</h2>
+    <div class="product">
+      <h3>VIP Backstage Pass</h3>
+      <p>Get exclusive access to meet the artists!</p>
+      <button onclick="purchase('VIP Backstage Pass')">Buy for $199</button>
+    </div>
+    <div class="product">
+      <h3>Limited Edition T-Shirt</h3>
+      <p>Commemorate this epic concert with our exclusive design.</p>
+      <button onclick="purchase('Limited Edition T-Shirt')">Buy for $29.99</button>
+    </div>
+    <div class="product">
+      <h3>Digital Album Download</h3>
+      <p>Get the studio version of tonight's setlist.</p>
+      <button onclick="purchase('Digital Album Download')">Buy for $9.99</button>
+    </div>
+    <div class="product">
+      <h3>AR Concert Experience App</h3>
+      <p>Enhance your live experience with our augmented reality app.</p>
+      <button onclick="purchase('AR Concert Experience App')">Buy for $4.99</button>
+    </div>
+  </div>
+</div>
 
-  function init3DExperience() {
-    // 3D Scene Initialization
+<div id="sponsors-modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Event Sponsors</h2>
+    <div class="sponsor">
+      <h3>MegaSounds Audio Systems</h3>
+      <p>Bringing you crystal clear audio tonight!</p>
+      <button onclick="visitSponsor('MegaSounds')">Visit Website</button>
+    </div>
+    <div class="sponsor">
+      <h3>LightFX Productions</h3>
+      <p>Creating an unforgettable visual experience.</p>
+      <button onclick="visitSponsor('LightFX')">Visit Website</button>
+    </div>
+    <div class="sponsor">
+      <h3>ConcertGear Apparel</h3>
+      <p>Official merchandise provider for tonight's show.</p>
+      <button onclick="visitSponsor('ConcertGear')">Shop Now</button>
+    </div>
+    <div class="sponsor">
+      <h3>StageView Streaming</h3>
+      <p>Can't be here? Watch the live stream!</p>
+      <button onclick="visitSponsor('StageView')">Start Streaming</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 3D Initialization
+  let scene, camera, renderer, controls;
+
+  function init3D() {
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.getElementById('scene-container').appendChild(renderer.domElement);
 
-    // Lighting
-    const ambientLight = new THREE.AmbientLight(0x404040);
-    scene.add(ambientLight);
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-    directionalLight.position.set(0, 1, 0);
-    scene.add(directionalLight);
+    const light = new THREE.AmbientLight(0x404040);
+    scene.add(light);
 
-    // Stadium Geometry
-    const stadiumGeometry = new THREE.CylinderGeometry(50, 50, 30, 32, 1, true);
-    const stadiumMaterial = new THREE.MeshPhongMaterial({ color: 0x999999, side: THREE.DoubleSide });
-    stadium = new THREE.Mesh(stadiumGeometry, stadiumMaterial);
-    scene.add(stadium);
+    // Add more 3D elements as needed...
 
-    // Stage Geometry
-    const stageGeometry = new THREE.BoxGeometry(20, 2, 10);
-    const stageMaterial = new THREE.MeshPhongMaterial({ color: 0x333333 });
-    stage = new THREE.Mesh(stageGeometry, stageMaterial);
-    stage.position.set(0, -14, 0);
-    scene.add(stage);
+    camera.position.set(0, 0, 50);
 
-    // Screen Geometry
-    const screenGeometry = new THREE.PlaneGeometry(20, 10);
-    const screenMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    screen = new THREE.Mesh(screenGeometry, screenMaterial);
-    screen.position.set(0, -9, -4.9);
-    scene.add(screen);
-
-    // Crowd (Points Geometry)
-    const crowdGeometry = new THREE.BufferGeometry();
-    const crowdMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.1 });
-    const crowdPositions = [];
-    for (let i = 0; i < 10000; i++) {
-      const theta = THREE.MathUtils.randFloatSpread(Math.PI * 2);
-      const radius = 30 + Math.random() * 15;
-      crowdPositions.push(
-        Math.cos(theta) * radius,
-        THREE.MathUtils.randFloatSpread(10) - 10,
-        Math.sin(theta) * radius
-      );
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
     }
-    crowdGeometry.setAttribute('position', new THREE.Float32BufferAttribute(crowdPositions, 3));
-    crowd = new THREE.Points(crowdGeometry, crowdMaterial);
-    scene.add(crowd);
-
-    // Camera Position
-    camera.position.set(0, 0, 30);
 
     animate();
   }
 
-  function animate() {
-    requestAnimationFrame(animate);
-    renderer.render(scene, camera);
-  }
-
-  // Chatbot functionality
+  // Chatbot and iframe functionality
   const chatMessages = document.getElementById('chat-messages');
   const userInput = document.getElementById('user-input');
   const sendBtn = document.getElementById('send-btn');
   const iframe = document.getElementById('movie-iframe');
 
-  function addChatMessage(message, isBot = false) {
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `chat-message ${isBot ? 'bot-message' : 'user-message'}`;
-    messageDiv.textContent = message;
-    chatMessages.appendChild(messageDiv);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  }
-
   sendBtn.addEventListener('click', () => {
-    const userMessage = userInput.value.trim();
-    if (!userMessage) return;
+    const movieName = userInput.value.trim();
+    if (!movieName) return;
 
-    addChatMessage(userMessage);
-    userInput.value = '';
+    chatMessages.innerHTML += `<div class="user-message">${movieName}</div>`;
+    const movieUrl = getMovieUrl(movieName); // from movies.js
 
-    // Use movies.js to find the movie
-    if (typeof getMovieUrl === 'function') {
-      const movieUrl = getMovieUrl(userMessage);
-      if (movieUrl) {
-        addChatMessage("Yes, I have it. Enjoy it!", true);
-        iframe.src = movieUrl;
-      } else {
-        addChatMessage("I'm sorry, I don't have that movie. Try another one!", true);
-      }
+    if (movieUrl) {
+      chatMessages.innerHTML += `<div class="bot-message">Yes, I have it. Enjoy it!</div>`;
+      iframe.src = movieUrl;
     } else {
-      addChatMessage("Error: Movie database not loaded.", true);
+      chatMessages.innerHTML += `<div class="bot-message">Sorry, I don't have that movie.</div>`;
     }
   });
 
-  // Initialize 3D Experience
-  init3DExperience();
+  // Initialize
+  init3D();
 </script>
 </body>
 </html>
