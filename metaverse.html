@@ -7,6 +7,29 @@
     background: #000;
   }
   
+  .title {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 2.5em;
+    text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    z-index: 1000;
+    text-align: center;
+    animation: glow 2s infinite alternate;
+  }
+
+  @keyframes glow {
+    from {
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+    to {
+      text-shadow: 0 0 20px rgba(255,255,255,0.8),
+                   0 0 30px rgba(255,255,255,0.3);
+    }
+  }
+
   .stage {
     perspective: 1000px;
     width: 100vw;
@@ -141,10 +164,16 @@
     background: rgba(0,0,0,0.7);
     padding: 20px;
     border-radius: 10px;
-    width: 90%;
-    max-width: 600px;
+    width: auto;
+    max-width: none;
   }
   
+  .video-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+
   .view-controls {
     position: fixed;
     top: 20px;
@@ -155,49 +184,6 @@
     border-radius: 10px;
     display: flex;
     gap: 10px;
-  }
-
-  .chat-input {
-    display: flex;
-    gap: 10px;
-    width: 100%;
-  }
-
-  input {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background: #333;
-    color: white;
-  }
-
-  button {
-    background: #444;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  
-  button:hover {
-    background: #666;
-  }
-
-  .chat-history {
-    max-height: 100px;
-    overflow-y: auto;
-    margin-bottom: 10px;
-    color: white;
-  }
-
-  .message {
-    padding: 5px;
-    margin: 5px 0;
-    border-radius: 5px;
-    background: rgba(255,255,255,0.1);
   }
 
   .zoom-controls {
@@ -251,10 +237,16 @@
     .controls {
       padding: 10px;
     }
+
+    .title {
+      font-size: 1.8em;
+    }
   }
 </style>
 </head>
 <body>
+
+<h1 class="title">Welcome to AI Movie Metaverse</h1>
 
 <div class="stage">
   <div class="scene">
@@ -295,96 +287,34 @@
 </div>
 
 <div class="controls">
-  <div class="chat-history" id="chatHistory"></div>
-  <div class="chat-input">
-    <input type="text" id="searchInput" placeholder="Search for a YouTube video..." onkeypress="handleKeyPress(event)">
-    <button onclick="searchVideo()">Search</button>
+  <div class="video-buttons">
+    <button onclick="playVideo('ZtxAD01inyo')">Harry Potter</button>
+    <button onclick="playVideo('hgiTjO_OO_w')">UFC</button>
+    <button onclick="playVideo('a6eP5vdRkq8')">Space Force</button>
   </div>
 </div>
-<script src="movies.js"></script>
+
 <script>
 let autoRotate = false;
 let rotationAngle = 0;
-let aiMovieDatabase = []; // Will be populated from movies.js
+let movieDatabase = []; // Will be populated from movies.js
 
 // Wait for movies.js to load
 window.onload = function() {
   if (typeof movies !== 'undefined') {
-    aiMovieDatabase = movies;
+    movieDatabase = movies;
   }
 }
 
-function addMessage(text, isUser = false) {
-  const chatHistory = document.getElementById('chatHistory');
-  const message = document.createElement('div');
-  message.className = 'message';
-  message.textContent = isUser ? `You: ${text}` : `Bot: ${text}`;
-  chatHistory.appendChild(message);
-  chatHistory.scrollTop = chatHistory.scrollHeight;
-}
-
-function handleKeyPress(event) {
-  if (event.key === 'Enter') {
-    searchVideo();
-  }
-}
-
-function extractVideoId(url) {
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-  const match = url.match(regExp);
-  return (match && match[2].length === 11) ? match[2] : url;
-}
-
-function searchVideo() {
-  const input = document.getElementById('searchInput');
-  const query = input.value.trim().toLowerCase();
-  
-  if (!query) {
-    addMessage('Please enter a search term or YouTube URL');
-    return;
-  }
-
-  // First check if it's a direct YouTube URL
-  if (query.includes('youtube.com') || query.includes('youtu.be')) {
-    const videoId = extractVideoId(query);
-    updateVideo(videoId);
-    addMessage(query, true);
-    addMessage('Direct YouTube URL detected! Enjoy watching 🎬');
-    return;
-  }
-
-  // Search in movie database
-  if (aiMovieDatabase.length > 0) {
-    const foundMovie = aiMovieDatabase.find(movie => 
-      movie.title.toLowerCase().includes(query) || 
-      movie.description.toLowerCase().includes(query)
-    );
-
-    if (foundMovie && foundMovie.youtubeId) {
-      updateVideo(foundMovie.youtubeId);
-      addMessage(query, true);
-      addMessage(`Found "${foundMovie.title}"! Enjoy watching 🎬`);
-    } else {
-      // If not found in database, use as regular YouTube search term
-      const videoId = query;
-      updateVideo(videoId);
-      addMessage(query, true);
-      addMessage('Video updated! Note: For best results, try using a YouTube URL or search for movies in our database.');
-    }
-  } else {
-    // Fallback if database isn't loaded
-    const videoId = query;
-    updateVideo(videoId);
-    addMessage(query, true);
-    addMessage('Video updated! Note: Movie database not loaded, using direct search.');
-  }
-  
-  input.value = '';
-}
-
-function updateVideo(videoId) {
+function playVideo(videoId) {
   const iframe = document.querySelector('iframe');
   iframe.src = `https://www.youtube.com/embed/${videoId}`;
+}
+
+function resetView() {
+  const scene = document.querySelector('.scene');
+  scene.style.transform = 'rotateX(0deg) rotateY(0deg)';
+  autoRotate = false;
 }
 
 function toggleAutoRotate() {
@@ -392,12 +322,6 @@ function toggleAutoRotate() {
   if (autoRotate) {
     rotateScene();
   }
-}
-
-function resetView() {
-  const scene = document.querySelector('.scene');
-  scene.style.transform = 'rotateX(0deg) rotateY(0deg)';
-  autoRotate = false;
 }
 
 function rotateScene() {
@@ -468,6 +392,77 @@ document.addEventListener('wheel', (e) => {
   currentZPosition = Math.max(-500, Math.min(500, currentZPosition - e.deltaY));
   
   scene.style.transform = `rotateY(${rotationAngle}deg) translateZ(${currentZPosition}px)`;
+}, { passive: false });
+
+// Enhance motion controls for stage movement
+window.addEventListener('devicemotion', (e) => {
+  if (autoRotate) return;
+  
+  const scene = document.querySelector('.scene');
+  const accelerationX = e.accelerationIncludingGravity.x;
+  const accelerationY = e.accelerationIncludingGravity.y;
+  const accelerationZ = e.accelerationIncludingGravity.z;
+  
+  // Convert acceleration to rotation angles
+  const rotationX = Math.max(-30, Math.min(30, accelerationY * 2));
+  const rotationY = Math.max(-30, Math.min(30, accelerationX * 2));
+  
+  // Update Z position based on forward/backward tilt
+  currentZPosition = Math.max(-500, Math.min(500, currentZPosition + accelerationZ));
+  
+  scene.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg) translateZ(${currentZPosition}px)`;
+});
+
+// Add touch controls for mobile devices
+let touchStartX = 0;
+let touchStartY = 0;
+let touchStartDistance = 0;
+
+document.addEventListener('touchstart', (e) => {
+  if (e.touches.length === 1) {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  } else if (e.touches.length === 2) {
+    // Calculate initial distance between two fingers for pinch zoom
+    touchStartDistance = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY
+    );
+  }
+});
+
+document.addEventListener('touchmove', (e) => {
+  if (autoRotate) return;
+  
+  if (e.touches.length === 1) {
+    const deltaX = e.touches[0].clientX - touchStartX;
+    const deltaY = e.touches[0].clientY - touchStartY;
+    
+    rotationAngle += deltaX * 0.5;
+    const xRotation = Math.max(-30, Math.min(30, deltaY * 0.5));
+    
+    const scene = document.querySelector('.scene');
+    scene.style.transform = `rotateY(${rotationAngle}deg) rotateX(${xRotation}deg) translateZ(${currentZPosition}px)`;
+    
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  } else if (e.touches.length === 2) {
+    // Handle pinch zoom
+    const currentDistance = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY
+    );
+    
+    const deltaDistance = currentDistance - touchStartDistance;
+    currentZPosition = Math.max(-500, Math.min(500, currentZPosition + deltaDistance * 0.5));
+    
+    const scene = document.querySelector('.scene');
+    scene.style.transform = `rotateY(${rotationAngle}deg) translateZ(${currentZPosition}px)`;
+    
+    touchStartDistance = currentDistance;
+  }
+  
+  e.preventDefault();
 }, { passive: false });
 
 </script>
