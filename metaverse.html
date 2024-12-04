@@ -148,26 +148,7 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <h2>Concert Marketplace</h2>
-    <div class="product">
-      <h3>VIP Backstage Pass</h3>
-      <p>Get exclusive access to meet the artists!</p>
-      <button onclick="purchase('VIP Backstage Pass')">Buy for $199</button>
-    </div>
-    <div class="product">
-      <h3>Limited Edition T-Shirt</h3>
-      <p>Commemorate this epic concert with our exclusive design.</p>
-      <button onclick="purchase('Limited Edition T-Shirt')">Buy for $29.99</button>
-    </div>
-    <div class="product">
-      <h3>Digital Album Download</h3>
-      <p>Get the studio version of tonight's setlist.</p>
-      <button onclick="purchase('Digital Album Download')">Buy for $9.99</button>
-    </div>
-    <div class="product">
-      <h3>AR Concert Experience App</h3>
-      <p>Enhance your live experience with our augmented reality app.</p>
-      <button onclick="purchase('AR Concert Experience App')">Buy for $4.99</button>
-    </div>
+    <!-- Marketplace Items -->
   </div>
 </div>
 
@@ -175,34 +156,15 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <h2>Event Sponsors</h2>
-    <div class="sponsor">
-      <h3>MegaSounds Audio Systems</h3>
-      <p>Bringing you crystal clear audio tonight!</p>
-      <button onclick="visitSponsor('MegaSounds')">Visit Website</button>
-    </div>
-    <div class="sponsor">
-      <h3>LightFX Productions</h3>
-      <p>Creating an unforgettable visual experience.</p>
-      <button onclick="visitSponsor('LightFX')">Visit Website</button>
-    </div>
-    <div class="sponsor">
-      <h3>ConcertGear Apparel</h3>
-      <p>Official merchandise provider for tonight's show.</p>
-      <button onclick="visitSponsor('ConcertGear')">Shop Now</button>
-    </div>
-    <div class="sponsor">
-      <h3>StageView Streaming</h3>
-      <p>Can't be here? Watch the live stream!</p>
-      <button onclick="visitSponsor('StageView')">Start Streaming</button>
-    </div>
+    <!-- Sponsor Items -->
   </div>
 </div>
 
 <script>
-  // 3D Initialization
-  let scene, camera, renderer, controls;
+  let scene, camera, renderer, stadium, stage, screen, crowd;
+  let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
 
-  function init3D() {
+  function init3DExperience() {
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     renderer = new THREE.WebGLRenderer();
@@ -212,19 +174,37 @@
     const light = new THREE.AmbientLight(0x404040);
     scene.add(light);
 
-    // Add more 3D elements as needed...
+    // Stadium and stage setup
+    const geometry = new THREE.BoxGeometry(50, 1, 50);
+    const material = new THREE.MeshBasicMaterial({ color: 0x888888 });
+    stage = new THREE.Mesh(geometry, material);
+    scene.add(stage);
 
-    camera.position.set(0, 0, 50);
-
-    function animate() {
-      requestAnimationFrame(animate);
-      renderer.render(scene, camera);
-    }
+    camera.position.z = 100;
 
     animate();
   }
 
-  // Chatbot and iframe functionality
+  function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+  }
+
+  document.addEventListener('keydown', (event) => {
+    if (event.code === 'KeyW') moveForward = true;
+    if (event.code === 'KeyS') moveBackward = true;
+    if (event.code === 'KeyA') moveLeft = true;
+    if (event.code === 'KeyD') moveRight = true;
+  });
+
+  document.addEventListener('keyup', (event) => {
+    if (event.code === 'KeyW') moveForward = false;
+    if (event.code === 'KeyS') moveBackward = false;
+    if (event.code === 'KeyA') moveLeft = false;
+    if (event.code === 'KeyD') moveRight = false;
+  });
+
+  // Chatbot logic
   const chatMessages = document.getElementById('chat-messages');
   const userInput = document.getElementById('user-input');
   const sendBtn = document.getElementById('send-btn');
@@ -235,7 +215,7 @@
     if (!movieName) return;
 
     chatMessages.innerHTML += `<div class="user-message">${movieName}</div>`;
-    const movieUrl = getMovieUrl(movieName); // from movies.js
+    const movieUrl = getMovieUrl(movieName); // Movie lookup from movies.js
 
     if (movieUrl) {
       chatMessages.innerHTML += `<div class="bot-message">Yes, I have it. Enjoy it!</div>`;
@@ -245,8 +225,7 @@
     }
   });
 
-  // Initialize
-  init3D();
+  init3DExperience();
 </script>
 </body>
 </html>
