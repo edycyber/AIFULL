@@ -1,11 +1,91 @@
-<html><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Movie Club</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>">
 <style>
-  body {
+:root {
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    --primary-color: #3498db;
+    --secondary-color: #03dac6;
+    --dark-bg: #1e1e1e;
+    --text: #ffffff;
+    --darker-bg: #161616;
+    --accent: #03dac6;
+}
+
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--text);
+    height: 100vh;
     overflow: hidden;
-    font-family: Arial, sans-serif;
-    background: #000;
-  }
+}
+
+header {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: var(--primary-color);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-right: 2rem;
+}
+
+.sign-out {
+    background-color: var(--secondary-color);
+    color: var(--bg-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sign-out:hover {
+    background-color: #02b39b;
+}
   
   .title {
     position: fixed;
@@ -245,6 +325,18 @@
 </style>
 </head>
 <body>
+  <header>
+    <nav>
+        <ul>
+            <li class="logo">Sparrow AI</li>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="select.html">Back</a></li>
+        </ul>
+        <button class="sign-out" onclick="window.location.href='index.html'">Sign Out</button>
+    </nav>
+</header>
 
 <h1 class="title">Welcome to AI Movie Metaverse</h1>
 
